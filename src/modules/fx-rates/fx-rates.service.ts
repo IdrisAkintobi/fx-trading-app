@@ -29,10 +29,7 @@ export class FxRatesService {
   ) {
     this.apiUrl = this.configService.get<string>('FX_RATE_API_URL')!;
     this.apiKey = this.configService.get<string>('FX_RATE_API_KEY')!;
-    this.cacheTtl = this.configService.get<number>(
-      'FX_RATE_CACHE_TTL_SEC',
-      300,
-    );
+    this.cacheTtl = this.configService.get<number>('FX_RATE_CACHE_TTL_SEC')!;
   }
 
   async getRate(fromCurrency: Currency, toCurrency: Currency): Promise<number> {

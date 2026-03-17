@@ -145,13 +145,11 @@ export class AuthService {
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.jwtService.signAsync(payload, {
-        secret:
-          this.configService.get<string>('JWT_REFRESH_SECRET') ||
-          'refresh-secret',
-        expiresIn: (this.configService.get<string>('JWT_REFRESH_EXPIRATION') ||
-          '7d') as any,
-      }),
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET')!,
+        expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION')!,
+      } as any),
     ]);
 
     return {

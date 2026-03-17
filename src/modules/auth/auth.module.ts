@@ -13,10 +13,10 @@ import { UsersModule } from '../users/users.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'default-secret',
+        secret: configService.get<string>('JWT_SECRET')!,
         signOptions: {
-          expiresIn: (configService.get<string>('JWT_EXPIRATION') ||
-            '15m') as any,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          expiresIn: configService.get<string>('JWT_EXPIRATION')! as any,
         },
       }),
     }),

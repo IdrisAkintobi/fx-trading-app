@@ -2,6 +2,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+// Note: These fallbacks are needed because data-source runs before NestJS validation
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST || 'localhost',
