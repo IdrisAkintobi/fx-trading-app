@@ -116,48 +116,73 @@ export class TransactionsService {
 
     const stats = {
       totalTransactions: transactions.length,
-      byType: {} as Record<TransactionType, number>,
+      byType: this.initializeTypeCounters(),
       byCurrency: {} as Record<string, { funded: string; spent: string }>,
     };
-
-    // Initialize counters
-    for (const type of Object.values(TransactionType)) {
-      stats.byType[type] = 0;
-    }
 
     // Calculate stats
     for (const tx of transactions) {
       stats.byType[tx.type]++;
-
-      // Track amounts by currency
-      if (tx.type === TransactionType.FUND) {
-        if (!stats.byCurrency[tx.toCurrency]) {
-          stats.byCurrency[tx.toCurrency] = { funded: '0', spent: '0' };
-        }
-        const current = Number.parseFloat(
-          stats.byCurrency[tx.toCurrency].funded,
-        );
-        stats.byCurrency[tx.toCurrency].funded = (
-          current + Number.parseFloat(tx.toAmount)
-        ).toFixed(2);
-      } else if (
-        tx.type === TransactionType.CONVERT ||
-        tx.type === TransactionType.TRADE
-      ) {
-        if (tx.fromCurrency) {
-          if (!stats.byCurrency[tx.fromCurrency]) {
-            stats.byCurrency[tx.fromCurrency] = { funded: '0', spent: '0' };
-          }
-          const current = Number.parseFloat(
-            stats.byCurrency[tx.fromCurrency].spent,
-          );
-          stats.byCurrency[tx.fromCurrency].spent = (
-            current + Number.parseFloat(tx.fromAmount || '0')
-          ).toFixed(2);
-        }
-      }
+      this.updateCurrencyStats(stats.byCurrency, tx);
     }
 
     return stats;
+  }
+
+  private initializeTypeCounters(): Record<TransactionType, number> {
+    const counters = {} as Record<TransactionType, number>;
+    for (const type of Object.values(TransactionType)) {
+      counters[type] = 0;
+    }
+    return counters;
+  }
+
+  private updateCurrencyStats(
+    byCurrency: Record<string, { funded: string; spent: string }>,
+    tx: Transaction,
+  ): void {
+    switch (tx.type) {
+      case TransactionType.FUND:
+        this.addFundedAmount(byCurrency, tx.toCurrency, tx.toAmount);
+        break;
+      case TransactionType.CONVERT:
+      case TransactionType.TRADE:
+        if (tx.fromCurrency) {
+          this.addSpentAmount(
+            byCurrency,
+            tx.fromCurrency,
+            tx.fromAmount || '0',
+          );
+        }
+        break;
+    }
+  }
+
+  private addFundedAmount(
+    byCurrency: Record<string, { funded: string; spent: string }>,
+    currency: string,
+    amount: string,
+  ): void {
+    if (!byCurrency[currency]) {
+      byCurrency[currency] = { funded: '0', spent: '0' };
+    }
+    const current = Number.parseFloat(byCurrency[currency].funded);
+    byCurrency[currency].funded = (current + Number.parseFloat(amount)).toFixed(
+      2,
+    );
+  }
+
+  private addSpentAmount(
+    byCurrency: Record<string, { funded: string; spent: string }>,
+    currency: string,
+    amount: string,
+  ): void {
+    if (!byCurrency[currency]) {
+      byCurrency[currency] = { funded: '0', spent: '0' };
+    }
+    const current = Number.parseFloat(byCurrency[currency].spent);
+    byCurrency[currency].spent = (current + Number.parseFloat(amount)).toFixed(
+      2,
+    );
   }
 }

@@ -1,5 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST || 'localhost',
@@ -7,8 +9,12 @@ export const dataSourceOptions: DataSourceOptions = {
   username: process.env.DATABASE_USER || 'postgres',
   password: process.env.DATABASE_PASSWORD || 'postgres',
   database: process.env.DATABASE_NAME || 'fx_trading',
-  entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: ['dist/database/migrations/*{.ts,.js}'],
+  entities: isProduction
+    ? ['dist/**/*.entity{.ts,.js}']
+    : ['src/**/*.entity{.ts,.js}'],
+  migrations: isProduction
+    ? ['dist/database/migrations/*{.ts,.js}']
+    : ['src/database/migrations/*{.ts,.js}'],
   synchronize: false,
   logging: process.env.DATABASE_LOGGING === 'true',
 };

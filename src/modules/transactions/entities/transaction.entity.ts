@@ -63,7 +63,7 @@ export class Transaction {
   @Index()
   status: TransactionStatus;
 
-  @Column({ unique: true, nullable: true })
+  @Column({ type: 'varchar', unique: true, nullable: true })
   @Index()
   idempotencyKey: string | null;
 
