@@ -1,23 +1,23 @@
 import {
-  Injectable,
   BadRequestException,
+  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
-import { OtpService } from './otp.service';
-import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { OtpService } from './otp.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private otpService: OtpService,
-    private jwtService: JwtService,
-    private configService: ConfigService,
+    private readonly usersService: UsersService,
+    private readonly otpService: OtpService,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async register(registerDto: RegisterDto) {

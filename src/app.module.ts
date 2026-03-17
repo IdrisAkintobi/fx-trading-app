@@ -5,6 +5,9 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { validate } from './config/env.validation';
 import { dataSourceOptions } from './data-source';
 import { RedisModule } from './modules/redis/redis.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { WalletModule } from './modules/wallet/wallet.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -25,6 +28,11 @@ import { AppService } from './app.service';
 
     // Schedule for cron jobs
     ScheduleModule.forRoot(),
+
+    // Feature modules
+    AuthModule,
+    UsersModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [AppService],

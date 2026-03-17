@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RedisService } from '../redis/redis.service';
 import { createHash, randomInt } from 'node:crypto';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class OtpService {
   constructor(
-    private redisService: RedisService,
-    private configService: ConfigService,
+    private readonly redisService: RedisService,
+    private readonly configService: ConfigService,
   ) {}
 
   async generateOtp(email: string): Promise<string> {
