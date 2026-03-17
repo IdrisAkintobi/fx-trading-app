@@ -73,9 +73,6 @@ export class EnvironmentVariables {
   @IsNumber()
   SMTP_PORT: number;
 
-  @IsBoolean()
-  SMTP_SECURE: boolean;
-
   @IsString()
   SMTP_USER: string;
 
