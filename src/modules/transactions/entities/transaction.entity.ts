@@ -67,8 +67,8 @@ export class Transaction {
   @Index()
   idempotencyKey: string | null;
 
-  @Column({ type: 'text', nullable: true })
-  metadata: string | null;
+  @Column({ type: 'simple-json', nullable: true })
+  metadata: Record<string, any> | null;
 
   @CreateDateColumn()
   @Index()

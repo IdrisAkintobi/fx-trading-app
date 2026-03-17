@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 import { WalletService } from './wallet.service';
 import { FxRatesService } from '../fx-rates/fx-rates.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -15,15 +15,22 @@ export class WalletController {
     private readonly fxRatesService: FxRatesService,
   ) {}
 
-  @Get()
+  @Get('balances')
   async getBalances(@GetUser('sub') userId: string) {
-    return this.walletService.getBalances(userId);
+    const balances = await this.walletService.getBalances(userId);
+    return {
+      data: balances,
+      message:
+        balances.length > 0
+          ? 'Wallet balances retrieved successfully'
+          : 'No wallet balances found. Fund your wallet to get started.',
+    };
   }
 
-  @Get('balance')
+  @Get('balance/:currency')
   async getBalance(
     @GetUser('sub') userId: string,
-    @Query('currency') currency: Currency,
+    @Param('currency') currency: Currency,
   ) {
     return this.walletService.getBalance(userId, currency);
   }

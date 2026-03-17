@@ -126,7 +126,7 @@ export class WalletService {
         rate: null,
         status: TransactionStatus.COMPLETED,
         idempotencyKey,
-        metadata: JSON.stringify({ balance: walletBalance.balance }),
+        metadata: { balance: walletBalance.balance },
       });
 
       const savedTransaction = await queryRunner.manager.save(transaction);
@@ -260,10 +260,10 @@ export class WalletService {
         rate: rate.toString(),
         status: TransactionStatus.COMPLETED,
         idempotencyKey,
-        metadata: JSON.stringify({
+        metadata: {
           sourceBalance: sourceBalance.balance,
           targetBalance: targetBalance.balance,
-        }),
+        },
       });
 
       const savedTransaction = await queryRunner.manager.save(transaction);
@@ -399,10 +399,10 @@ export class WalletService {
         rate: rate.toString(),
         status: TransactionStatus.COMPLETED,
         idempotencyKey,
-        metadata: JSON.stringify({
+        metadata: {
           sourceBalance: sourceBalance.balance,
           targetBalance: targetBalance.balance,
-        }),
+        },
       });
 
       const savedTransaction = await queryRunner.manager.save(transaction);
