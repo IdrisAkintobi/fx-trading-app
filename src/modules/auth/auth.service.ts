@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { EmailService } from '../email/email.service';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -18,6 +19,7 @@ export class AuthService {
     private readonly otpService: OtpService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -29,8 +31,8 @@ export class AuthService {
     // Generate and send OTP
     const otp = await this.otpService.generateOtp(user.email);
 
-    // TODO: Send OTP via email
-    console.log(`OTP for ${user.email}: ${otp}`);
+    // Send OTP via email
+    await this.emailService.sendOtp(user.email, otp);
 
     return {
       message: 'Registration successful. Please check your email for OTP.',
@@ -86,13 +88,16 @@ export class AuthService {
     // Verify user
     await this.usersService.verifyUser(user.id);
 
+    // Send welcome email
+    await this.emailService.sendWelcomeEmail(user.email, user.email);
+
     return {
       message: 'Email verified successfully',
       ...(await this.generateTokens(user.id, user.email, user.role)),
     };
   }
 
-  async resendOtp(email: string) {
+  async sendOtp(email: string) {
     const user = await this.usersService.findByEmail(email);
 
     if (!user) {
@@ -105,8 +110,8 @@ export class AuthService {
 
     const otp = await this.otpService.generateOtp(email);
 
-    // TODO: Send OTP via email
-    console.log(`OTP for ${email}: ${otp}`);
+    // Send OTP via email
+    await this.emailService.sendOtp(email, otp);
 
     return { message: 'OTP sent successfully' };
   }

@@ -27,10 +27,10 @@ export class AuthController {
     return this.authService.verifyOtp(verifyOtpDto);
   }
 
-  @Post('resend-otp')
+  @Post('send-otp')
   @Public()
-  async resendOtp(@Body('email') email: string) {
-    return this.authService.resendOtp(email);
+  async sendOtp(@Body('email') email: string) {
+    return this.authService.sendOtp(email);
   }
 
   @Post('refresh')
