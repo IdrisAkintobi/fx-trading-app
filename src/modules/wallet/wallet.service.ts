@@ -101,7 +101,7 @@ export class WalletService {
 
       if (balance) {
         // Update existing balance
-        const newBalance = parseFloat(balance.balance) + amount;
+        const newBalance = Number.parseFloat(balance.balance) + amount;
         balance.balance = newBalance.toString();
         await queryRunner.manager.save(balance);
         walletBalance = balance;
@@ -212,7 +212,7 @@ export class WalletService {
         throw new NotFoundException(`No ${fromCurrency} balance found`);
       }
 
-      const currentBalance = parseFloat(sourceBalance.balance);
+      const currentBalance = Number.parseFloat(sourceBalance.balance);
       if (currentBalance < amount) {
         throw new BadRequestException(
           `Insufficient ${fromCurrency} balance. Available: ${currentBalance}, Required: ${amount}`,
@@ -235,7 +235,7 @@ export class WalletService {
         .getOne();
 
       if (targetBalance) {
-        const targetCurrentBalance = parseFloat(targetBalance.balance);
+        const targetCurrentBalance = Number.parseFloat(targetBalance.balance);
         targetBalance.balance = (
           targetCurrentBalance + convertedAmount
         ).toString();
@@ -351,7 +351,7 @@ export class WalletService {
         throw new NotFoundException(`No ${fromCurrency} balance found`);
       }
 
-      const currentBalance = parseFloat(sourceBalance.balance);
+      const currentBalance = Number.parseFloat(sourceBalance.balance);
       if (currentBalance < amount) {
         throw new BadRequestException(
           `Insufficient ${fromCurrency} balance. Available: ${currentBalance}, Required: ${amount}`,
@@ -374,7 +374,7 @@ export class WalletService {
         .getOne();
 
       if (targetBalance) {
-        const targetCurrentBalance = parseFloat(targetBalance.balance);
+        const targetCurrentBalance = Number.parseFloat(targetBalance.balance);
         targetBalance.balance = (
           targetCurrentBalance + tradedAmount
         ).toString();
