@@ -1,0 +1,1104 @@
+openapi: 3.0.3
+info:
+  title: FX Trading App API
+  description: |
+    Production-ready FX Trading App backend API built with NestJS.
+    
+    ## Features
+    - Multi-currency wallet management (NGN, USD, EUR, GBP, etc.)
+    - Real-time currency conversion and trading
+    - Email verification with OTP
+    - Transaction history with pagination
+    - Secure JWT authentication
+    
+    ## Authentication
+    All endpoints except `/auth/*` require JWT authentication.
+    Include the JWT token in the Authorization header:
+    ```
+    Authorization: Bearer <your_access_token>
+    ```
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@fxtradingapp.com
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://api.fxtradingapp.com
+    description: Production server
+
+tags:
+  - name: Auth
+    description: Authentication and registration endpoints
+  - name: Users
+    description: User profile management
+  - name: Wallet
+    description: Multi-currency wallet operations
+  - name: FX Rates
+    description: Exchange rate information
+  - name: Transactions
+    description: Transaction history and statistics
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token obtained from login
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+        message:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        error:
+          type: string
+          example: Bad Request
+
+    Currency:
+      type: string
+      enum: [NGN, USD, EUR, GBP, JPY, CAD, AUD]
+      description: Supported currency codes
+
+    TransactionType:
+      type: string
+      enum: [FUND, CONVERT, TRADE]
+      description: |
+        - FUND: Adding money to wallet
+        - CONVERT: Converting between currencies
+        - TRADE: Trading currencies (similar to convert but marked differently)
+
+    TransactionStatus:
+      type: string
+      enum: [PENDING, COMPLETED, FAILED]
+      description: Transaction processing status
+
+    UserRole:
+      type: string
+      enum: [USER, ADMIN]
+      description: User role in the system
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        isVerified:
+          type: boolean
+          example: true
+        disabled:
+          type: boolean
+          example: false
+        role:
+          $ref: '#/components/schemas/UserRole'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2024-01-01T12:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2024-01-01T12:00:00Z
+
+    WalletBalance:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440001
+        userId:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440000
+        currency:
+          $ref: '#/components/schemas/Currency'
+        balance:
+          type: string
+          description: Balance as string to preserve decimal precision
+          example: "1250.50"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440002
+        userId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/TransactionType'
+        fromCurrency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
+        toCurrency:
+          allOf:
+            - $ref: '#/components/schemas/Currency'
+          nullable: true
+        fromAmount:
+          type: string
+          nullable: true
+          example: "100.00"
+        toAmount:
+          type: string
+          nullable: true
+          example: "85.00"
+        rate:
+          type: string
+          nullable: true
+          description: Exchange rate used for conversion
+          example: "0.85"
+        status:
+          $ref: '#/components/schemas/TransactionStatus'
+        idempotencyKey:
+          type: string
+          nullable: true
+          example: fund-12345
+        metadata:
+          type: string
+          nullable: true
+          description: JSON string containing additional transaction data
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 100
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        totalPages:
+          type: integer
+          example: 5
+        hasNextPage:
+          type: boolean
+          example: true
+        hasPreviousPage:
+          type: boolean
+          example: false
+
+    PaginatedTransactions:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'
+
+    TransactionStats:
+      type: object
+      properties:
+        totalTransactions:
+          type: integer
+          example: 150
+        byType:
+          type: object
+          additionalProperties:
+            type: integer
+          example:
+            FUND: 50
+            CONVERT: 75
+            TRADE: 25
+        byCurrency:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              funded:
+                type: string
+                example: "5000.00"
+              spent:
+                type: string
+                example: "2500.00"
+              received:
+                type: string
+                example: "2125.00"
+
+paths:
+  /api/v1/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: |
+        Creates a new user account and sends an OTP to the provided email for verification.
+        The user account will be unverified until the OTP is confirmed.
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  example: SecurePass123!
+                  description: Must be at least 8 characters
+      responses:
+        '201':
+          description: User registered successfully, OTP sent to email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User registered successfully. OTP sent to your email.
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                statusCode: 400
+                message:
+                  - email must be an email
+                  - password must be longer than or equal to 8 characters
+                error: Bad Request
+        '409':
+          description: Email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                statusCode: 409
+                message: User with this email already exists
+                error: Conflict
+
+  /api/v1/auth/verify-email:
+    post:
+      tags:
+        - Auth
+      summary: Verify email with OTP
+      description: |
+        Verifies user's email address using the OTP sent during registration.
+        OTP expires after 10 minutes and can only be used once.
+      operationId: verifyEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - otp
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                otp:
+                  type: string
+                  pattern: '^\d{6}$'
+                  example: "123456"
+                  description: 6-digit OTP code
+      responses:
+        '200':
+          description: Email verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Email verified successfully
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                statusCode: 400
+                message: Invalid or expired OTP
+                error: Bad Request
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/send-otp:
+    post:
+      tags:
+        - Auth
+      summary: Resend OTP to email
+      description: |
+        Sends a new OTP to the user's email. Can be used to resend OTP if the previous one expired.
+        Previous OTPs will be invalidated.
+      operationId: sendOtp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+      responses:
+        '200':
+          description: OTP sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OTP sent to your email
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login with email and password
+      description: |
+        Authenticates user and returns a JWT access token.
+        Email must be verified before login is allowed.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: john.doe@example.com
+                password:
+                  type: string
+                  format: password
+                  example: SecurePass123!
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                    description: JWT access token for authentication
+        '401':
+          description: Invalid credentials or email not verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalidCredentials:
+                  value:
+                    statusCode: 401
+                    message: Invalid credentials
+                    error: Unauthorized
+                notVerified:
+                  value:
+                    statusCode: 401
+                    message: Email not verified
+                    error: Unauthorized
+
+  /api/v1/users/profile:
+    get:
+      tags:
+        - Users
+      summary: Get current user profile
+      description: Returns the authenticated user's profile information
+      operationId: getProfile
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/wallet/balances:
+    get:
+      tags:
+        - Wallet
+      summary: Get all wallet balances
+      description: Returns all currency balances for the authenticated user
+      operationId: getBalances
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Wallet balances retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletBalance'
+              example:
+                - id: 550e8400-e29b-41d4-a716-446655440001
+                  userId: 550e8400-e29b-41d4-a716-446655440000
+                  currency: USD
+                  balance: "1250.50"
+                  createdAt: "2024-01-01T12:00:00Z"
+                  updatedAt: "2024-01-15T14:30:00Z"
+                - id: 550e8400-e29b-41d4-a716-446655440002
+                  userId: 550e8400-e29b-41d4-a716-446655440000
+                  currency: EUR
+                  balance: "800.25"
+                  createdAt: "2024-01-05T10:00:00Z"
+                  updatedAt: "2024-01-15T16:45:00Z"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/wallet/balance/{currency}:
+    get:
+      tags:
+        - Wallet
+      summary: Get balance for specific currency
+      description: |
+        Returns the wallet balance for a specific currency.
+        If the balance doesn't exist, it will be created with 0 balance.
+      operationId: getBalance
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: currency
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Currency'
+          example: USD
+      responses:
+        '200':
+          description: Balance retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletBalance'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/wallet/fund:
+    post:
+      tags:
+        - Wallet
+      summary: Fund wallet
+      description: |
+        Add funds to a specific currency wallet.
+        
+        **Idempotency**: Use the `idempotencyKey` to prevent duplicate transactions.
+        If a transaction with the same key exists, it will be returned instead of creating a new one.
+      operationId: fundWallet
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - currency
+                - amount
+              properties:
+                currency:
+                  $ref: '#/components/schemas/Currency'
+                amount:
+                  type: number
+                  minimum: 0.01
+                  example: 1000
+                  description: Amount to fund (must be greater than 0)
+                idempotencyKey:
+                  type: string
+                  example: fund-20240115-001
+                  description: Optional unique key to prevent duplicate transactions
+            example:
+              currency: USD
+              amount: 1000
+              idempotencyKey: fund-20240115-001
+      responses:
+        '201':
+          description: Wallet funded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+              example:
+                id: 550e8400-e29b-41d4-a716-446655440010
+                userId: 550e8400-e29b-41d4-a716-446655440000
+                type: FUND
+                fromCurrency: null
+                toCurrency: USD
+                fromAmount: null
+                toAmount: "1000"
+                rate: null
+                status: COMPLETED
+                idempotencyKey: fund-20240115-001
+                metadata: '{"balance":"2250.50"}'
+                createdAt: "2024-01-15T14:30:00Z"
+                updatedAt: "2024-01-15T14:30:00Z"
+        '400':
+          description: Bad request - Invalid amount or validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Lock acquisition failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                statusCode: 409
+                message: Wallet operation in progress. Please try again.
+                error: Conflict
+
+  /api/v1/wallet/convert:
+    post:
+      tags:
+        - Wallet
+      summary: Convert currency
+      description: |
+        Convert funds from one currency to another using real-time exchange rates.
+        
+        The operation:
+        1. Fetches the current exchange rate
+        2. Deducts the amount from source currency
+        3. Credits the converted amount to target currency
+        
+        **Note**: Distributed locks are used to prevent race conditions.
+      operationId: convertCurrency
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fromCurrency
+                - toCurrency
+                - amount
+              properties:
+                fromCurrency:
+                  $ref: '#/components/schemas/Currency'
+                toCurrency:
+                  $ref: '#/components/schemas/Currency'
+                amount:
+                  type: number
+                  minimum: 0.01
+                  example: 100
+                idempotencyKey:
+                  type: string
+                  example: convert-20240115-001
+            example:
+              fromCurrency: USD
+              toCurrency: EUR
+              amount: 100
+              idempotencyKey: convert-20240115-001
+      responses:
+        '201':
+          description: Currency converted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+              example:
+                id: 550e8400-e29b-41d4-a716-446655440011
+                userId: 550e8400-e29b-41d4-a716-446655440000
+                type: CONVERT
+                fromCurrency: USD
+                toCurrency: EUR
+                fromAmount: "100"
+                toAmount: "85"
+                rate: "0.85"
+                status: COMPLETED
+                idempotencyKey: convert-20240115-001
+                metadata: '{"sourceBalance":"2150.50","targetBalance":"885.25"}'
+                createdAt: "2024-01-15T15:00:00Z"
+                updatedAt: "2024-01-15T15:00:00Z"
+        '400':
+          description: Bad request - Insufficient balance, same currency, or invalid amount
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                insufficientBalance:
+                  value:
+                    statusCode: 400
+                    message: "Insufficient USD balance. Available: 50, Required: 100"
+                    error: Bad Request
+                sameCurrency:
+                  value:
+                    statusCode: 400
+                    message: Cannot convert to the same currency
+                    error: Bad Request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Source currency balance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Lock acquisition failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/wallet/trade:
+    post:
+      tags:
+        - Wallet
+      summary: Trade currency
+      description: |
+        Trade funds from one currency to another. Similar to convert but marked as TRADE transaction.
+        Uses real-time exchange rates and implements the same locking mechanism as convert.
+      operationId: tradeCurrency
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fromCurrency
+                - toCurrency
+                - amount
+              properties:
+                fromCurrency:
+                  $ref: '#/components/schemas/Currency'
+                toCurrency:
+                  $ref: '#/components/schemas/Currency'
+                amount:
+                  type: number
+                  minimum: 0.01
+                  example: 50
+                idempotencyKey:
+                  type: string
+                  example: trade-20240115-001
+            example:
+              fromCurrency: EUR
+              toCurrency: GBP
+              amount: 50
+              idempotencyKey: trade-20240115-001
+      responses:
+        '201':
+          description: Currency traded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+              example:
+                id: 550e8400-e29b-41d4-a716-446655440012
+                userId: 550e8400-e29b-41d4-a716-446655440000
+                type: TRADE
+                fromCurrency: EUR
+                toCurrency: GBP
+                fromAmount: "50"
+                toAmount: "44"
+                rate: "0.88"
+                status: COMPLETED
+                idempotencyKey: trade-20240115-001
+                metadata: '{"sourceBalance":"835.25","targetBalance":"44.00"}'
+                createdAt: "2024-01-15T15:30:00Z"
+                updatedAt: "2024-01-15T15:30:00Z"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Source currency balance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/fx-rates/rate:
+    get:
+      tags:
+        - FX Rates
+      summary: Get exchange rate between two currencies
+      description: |
+        Returns the current exchange rate from one currency to another.
+        
+        **Caching**: Rates are cached in Redis for 5 minutes to reduce API calls.
+        **Same Currency**: Returns rate of 1.0 for same currency pairs.
+      operationId: getExchangeRate
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Currency'
+          example: USD
+          description: Source currency
+        - name: to
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Currency'
+          example: EUR
+          description: Target currency
+      responses:
+        '200':
+          description: Exchange rate retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  from:
+                    $ref: '#/components/schemas/Currency'
+                  to:
+                    $ref: '#/components/schemas/Currency'
+                  rate:
+                    type: number
+                    example: 0.85
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2024-01-15T15:00:00Z"
+              example:
+                from: USD
+                to: EUR
+                rate: 0.85
+                timestamp: "2024-01-15T15:00:00Z"
+        '400':
+          description: Bad request - Invalid currency
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '502':
+          description: Bad Gateway - External FX API error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get transaction history with pagination
+      description: |
+        Returns paginated transaction history for the authenticated user.
+        
+        **Filters**: type, currency, date range
+        **Sorting**: Most recent first (descending by createdAt)
+      operationId: getTransactions
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          example: 1
+          description: Page number
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          example: 20
+          description: Items per page
+        - name: type
+          in: query
+          schema:
+            $ref: '#/components/schemas/TransactionType'
+          example: CONVERT
+          description: Filter by transaction type
+        - name: currency
+          in: query
+          schema:
+            $ref: '#/components/schemas/Currency'
+          example: USD
+          description: Filter by currency (matches fromCurrency or toCurrency)
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          example: "2024-01-01T00:00:00Z"
+          description: Filter transactions from this date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+          example: "2024-01-31T23:59:59Z"
+          description: Filter transactions until this date
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTransactions'
+              example:
+                data:
+                  - id: 550e8400-e29b-41d4-a716-446655440012
+                    userId: 550e8400-e29b-41d4-a716-446655440000
+                    type: TRADE
+                    fromCurrency: EUR
+                    toCurrency: GBP
+                    fromAmount: "50"
+                    toAmount: "44"
+                    rate: "0.88"
+                    status: COMPLETED
+                    idempotencyKey: trade-20240115-001
+                    metadata: '{"sourceBalance":"835.25","targetBalance":"44.00"}'
+                    createdAt: "2024-01-15T15:30:00Z"
+                    updatedAt: "2024-01-15T15:30:00Z"
+                  - id: 550e8400-e29b-41d4-a716-446655440011
+                    userId: 550e8400-e29b-41d4-a716-446655440000
+                    type: CONVERT
+                    fromCurrency: USD
+                    toCurrency: EUR
+                    fromAmount: "100"
+                    toAmount: "85"
+                    rate: "0.85"
+                    status: COMPLETED
+                    idempotencyKey: convert-20240115-001
+                    metadata: '{"sourceBalance":"2150.50","targetBalance":"885.25"}'
+                    createdAt: "2024-01-15T15:00:00Z"
+                    updatedAt: "2024-01-15T15:00:00Z"
+                meta:
+                  total: 50
+                  page: 1
+                  limit: 20
+                  totalPages: 3
+                  hasNextPage: true
+                  hasPreviousPage: false
+        '400':
+          description: Bad request - Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/transactions/{id}:
+    get:
+      tags:
+        - Transactions
+      summary: Get single transaction by ID
+      description: Returns detailed information about a specific transaction
+      operationId: getTransaction
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          example: 550e8400-e29b-41d4-a716-446655440012
+          description: Transaction ID
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/transactions/stats:
+    get:
+      tags:
+        - Transactions
+      summary: Get transaction statistics
+      description: |
+        Returns aggregated statistics about the user's transactions.
+        
+        Includes:
+        - Total transaction count
+        - Breakdown by transaction type
+        - Breakdown by currency (funded, spent, received amounts)
+      operationId: getTransactionStats
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: currency
+          in: query
+          schema:
+            $ref: '#/components/schemas/Currency'
+          example: USD
+          description: Filter statistics by currency
+      responses:
+        '200':
+          description: Statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionStats'
+              example:
+                totalTransactions: 150
+                byType:
+                  FUND: 50
+                  CONVERT: 75
+                  TRADE: 25
+                byCurrency:
+                  USD:
+                    funded: "5000.00"
+                    spent: "2500.00"
+                    received: "0.00"
+                  EUR:
+                    funded: "3000.00"
+                    spent: "1000.00"
+                    received: "2125.00"
+                  GBP:
+                    funded: "0.00"
+                    spent: "0.00"
+                    received: "880.00"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
