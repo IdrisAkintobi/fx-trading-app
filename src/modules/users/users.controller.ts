@@ -9,7 +9,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('profile')
-  async getProfile(@GetUser('id') userId: string) {
+  async getProfile(@GetUser('sub') userId: string) {
     const user = await this.usersService.findById(userId);
     const { password: _, ...result } = user;
     return result;

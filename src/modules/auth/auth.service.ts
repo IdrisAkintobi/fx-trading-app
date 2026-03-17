@@ -78,7 +78,7 @@ export class AuthService {
 
     const isValid = await this.otpService.verifyOtp(
       verifyOtpDto.email,
-      verifyOtpDto.code,
+      verifyOtpDto.otp,
     );
 
     if (!isValid) {

@@ -6,5 +6,5 @@ export class VerifyOtpDto {
 
   @IsString()
   @Length(6, 6)
-  code: string;
+  otp: string;
 }

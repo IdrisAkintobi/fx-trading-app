@@ -9,7 +9,9 @@ export class EmailService {
 
   async sendOtp(email: string, otp: string): Promise<boolean> {
     try {
-      await this.mailerService.sendMail({
+      this.logger.log(`Attempting to send OTP email to ${email}`);
+
+      const result = await this.mailerService.sendMail({
         to: email,
         subject: 'Your OTP Verification Code',
         text: `Your OTP verification code is: ${otp}\n\nThis code will expire in 10 minutes.\n\nIf you didn't request this code, please ignore this email.`,
@@ -26,17 +28,23 @@ export class EmailService {
         `,
       });
 
-      this.logger.log(`OTP email sent to ${email}`);
+      this.logger.log(`OTP email sent successfully to ${email}`);
+      this.logger.debug(`Email response: ${JSON.stringify(result)}`);
       return true;
     } catch (error) {
-      this.logger.error(`Failed to send OTP email to ${email}`, error);
+      this.logger.error(
+        `Failed to send OTP email to ${email}: ${error.message}`,
+      );
+      this.logger.error(`Error details:`, error);
       return false;
     }
   }
 
   async sendWelcomeEmail(email: string, name: string): Promise<boolean> {
     try {
-      await this.mailerService.sendMail({
+      this.logger.log(`Attempting to send welcome email to ${email}`);
+
+      const result = await this.mailerService.sendMail({
         to: email,
         subject: 'Welcome to FX Trading App',
         text: `Hi ${name},\n\nWelcome to FX Trading App! Your email has been verified successfully.\n\nYou can now start funding your wallet and trading currencies.\n\nBest regards,\nFX Trading Team`,
@@ -56,10 +64,14 @@ export class EmailService {
         `,
       });
 
-      this.logger.log(`Welcome email sent to ${email}`);
+      this.logger.log(`Welcome email sent successfully to ${email}`);
+      this.logger.debug(`Email response: ${JSON.stringify(result)}`);
       return true;
     } catch (error) {
-      this.logger.error(`Failed to send welcome email to ${email}`, error);
+      this.logger.error(
+        `Failed to send welcome email to ${email}: ${error.message}`,
+      );
+      this.logger.error(`Error details:`, error);
       return false;
     }
   }
