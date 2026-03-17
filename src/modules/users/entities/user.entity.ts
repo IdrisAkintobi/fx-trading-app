@@ -7,9 +7,9 @@ import {
   OneToMany,
   Index,
 } from 'typeorm';
-import { UserRole } from '../../common/constants/enums';
-import { WalletBalance } from '../../modules/wallet/entities/wallet-balance.entity';
-import { Transaction } from '../../modules/transactions/entities/transaction.entity';
+import { UserRole } from '../../../common/constants/enums';
+import { WalletBalance } from '../../wallet/entities/wallet-balance.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity('users')
 export class User {
