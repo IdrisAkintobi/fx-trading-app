@@ -154,7 +154,7 @@ describe('Auth Flow (e2e)', () => {
     });
 
     it('should not access protected route without token', async () => {
-      await request(app.getHttpServer())
+      return request(app.getHttpServer())
         .get('/api/v1/users/profile')
         .expect(401);
     });

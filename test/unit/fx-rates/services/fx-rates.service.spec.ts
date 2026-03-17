@@ -1,13 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Currency } from '../../../../src/common/constants/enums';
 import { FxRatesService } from '../../../../src/modules/fx-rates/fx-rates.service';
 import { RedisService } from '../../../../src/modules/redis/redis.service';
-import { Currency } from '../../../../src/common/constants/enums';
-import { mockRedisService, mockConfigService } from '../mocks/services.mock';
 import {
   mockFxRateApiResponse,
   mockFxRateFailedResponse,
 } from '../mocks/data.mock';
+import { mockConfigService, mockRedisService } from '../mocks/services.mock';
 
 describe('FxRatesService', () => {
   let service: FxRatesService;
@@ -52,7 +52,7 @@ describe('FxRatesService', () => {
     it('should fetch from API and cache when cache misses', async () => {
       mockRedisService.get.mockResolvedValue(null);
 
-      global.fetch = jest.fn().mockResolvedValue({
+      globalThis.fetch = jest.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockFxRateApiResponse),
       });
@@ -74,7 +74,7 @@ describe('FxRatesService', () => {
     it('should throw error when API fails', async () => {
       mockRedisService.get.mockResolvedValue(null);
 
-      global.fetch = jest.fn().mockResolvedValue({
+      globalThis.fetch = jest.fn().mockResolvedValue({
         ok: false,
         status: 500,
       });
@@ -87,7 +87,7 @@ describe('FxRatesService', () => {
     it('should throw error when API returns unsuccessful result', async () => {
       mockRedisService.get.mockResolvedValue(null);
 
-      global.fetch = jest.fn().mockResolvedValue({
+      globalThis.fetch = jest.fn().mockResolvedValue({
         ok: true,
         json: () => Promise.resolve(mockFxRateFailedResponse),
       });

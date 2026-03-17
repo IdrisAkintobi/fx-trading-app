@@ -1,32 +1,32 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import {
   BadRequestException,
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { WalletService } from '../../../../src/modules/wallet/wallet.service';
-import { WalletBalance } from '../../../../src/modules/wallet/entities/wallet-balance.entity';
-import { Transaction } from '../../../../src/modules/transactions/entities/transaction.entity';
-import { RedisService } from '../../../../src/modules/redis/redis.service';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import {
   Currency,
-  TransactionType,
   TransactionStatus,
+  TransactionType,
 } from '../../../../src/common/constants/enums';
-import {
-  mockWalletBalanceRepository,
-  mockTransactionRepository,
-  mockRedisService,
-  mockDataSource,
-  createMockQueryRunner,
-} from '../mocks/repository.mock';
+import { RedisService } from '../../../../src/modules/redis/redis.service';
+import { Transaction } from '../../../../src/modules/transactions/entities/transaction.entity';
+import { WalletBalance } from '../../../../src/modules/wallet/entities/wallet-balance.entity';
+import { WalletService } from '../../../../src/modules/wallet/wallet.service';
 import {
   mockWalletBalance,
   mockWalletBalanceEUR,
   mockWalletBalances,
 } from '../mocks/data.mock';
+import {
+  createMockQueryRunner,
+  mockDataSource,
+  mockRedisService,
+  mockTransactionRepository,
+  mockWalletBalanceRepository,
+} from '../mocks/repository.mock';
 
 describe('WalletService', () => {
   let service: WalletService;
@@ -292,7 +292,7 @@ describe('WalletService', () => {
         amount: 100,
         idempotencyKey: 'convert-123',
       };
-      const rate = 1.0;
+      const rate = 1;
 
       await expect(
         service.convertCurrency('user-123', convertDto, rate),
@@ -410,7 +410,7 @@ describe('WalletService', () => {
         amount: 100,
         idempotencyKey: 'trade-123',
       };
-      const rate = 1.0;
+      const rate = 1;
 
       await expect(
         service.tradeCurrency('user-123', tradeDto, rate),

@@ -1,5 +1,5 @@
 // Suppress all console logs during tests
-global.console = {
+globalThis.console = {
   ...console,
   log: jest.fn(),
   error: jest.fn(),
