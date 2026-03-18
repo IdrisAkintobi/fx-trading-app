@@ -1,6 +1,10 @@
 import fastifyCors from '@fastify/cors';
 import helmet from '@fastify/helmet';
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import {
@@ -10,6 +14,8 @@ import {
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  const logger = new Logger('Bootstrap');
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ logger: true }),
@@ -42,7 +48,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT', 3000);
   await app.listen(port, '0.0.0.0');
 
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 void bootstrap();

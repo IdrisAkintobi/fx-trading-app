@@ -9,9 +9,9 @@ import { EmailService } from '../email/email.service';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { RequestPasswordResetDto } from './dto/request-password-reset.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { OtpService } from './otp.service';
 import { PasswordResetService } from './password-reset.service';
 

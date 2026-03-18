@@ -1,5 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { Injectable, Logger } from '@nestjs/common';
+import { redactEmail } from '../../common/utils/redact.util';
 
 @Injectable()
 export class EmailService {
@@ -9,8 +10,9 @@ export class EmailService {
 
   async sendOtp(email: string, otp: string): Promise<boolean> {
     try {
-      this.logger.log(`Attempting to send OTP email to ${email}`);
+      this.logger.log(`Attempting to send OTP email to ${redactEmail(email)}`);
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const result = await this.mailerService.sendMail({
         to: email,
         subject: 'Your OTP Verification Code',
@@ -28,12 +30,14 @@ export class EmailService {
         `,
       });
 
-      this.logger.log(`OTP email sent successfully to ${email}`);
+      this.logger.log(`OTP email sent successfully to ${redactEmail(email)}`);
       this.logger.debug(`Email response: ${JSON.stringify(result)}`);
       return true;
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       this.logger.error(
-        `Failed to send OTP email to ${email}: ${error.message}`,
+        `Failed to send OTP email to ${redactEmail(email)}: ${errorMessage}`,
       );
       this.logger.error(`Error details:`, error);
       return false;
@@ -42,8 +46,11 @@ export class EmailService {
 
   async sendWelcomeEmail(email: string, name: string): Promise<boolean> {
     try {
-      this.logger.log(`Attempting to send welcome email to ${email}`);
+      this.logger.log(
+        `Attempting to send welcome email to ${redactEmail(email)}`,
+      );
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const result = await this.mailerService.sendMail({
         to: email,
         subject: 'Welcome to FX Trading App',
@@ -64,12 +71,16 @@ export class EmailService {
         `,
       });
 
-      this.logger.log(`Welcome email sent successfully to ${email}`);
+      this.logger.log(
+        `Welcome email sent successfully to ${redactEmail(email)}`,
+      );
       this.logger.debug(`Email response: ${JSON.stringify(result)}`);
       return true;
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       this.logger.error(
-        `Failed to send welcome email to ${email}: ${error.message}`,
+        `Failed to send welcome email to ${redactEmail(email)}: ${errorMessage}`,
       );
       this.logger.error(`Error details:`, error);
       return false;
@@ -78,8 +89,11 @@ export class EmailService {
 
   async sendPasswordReset(email: string, resetToken: string): Promise<boolean> {
     try {
-      this.logger.log(`Attempting to send password reset email to ${email}`);
+      this.logger.log(
+        `Attempting to send password reset email to ${redactEmail(email)}`,
+      );
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const result = await this.mailerService.sendMail({
         to: email,
         subject: 'Password Reset Code',
@@ -98,12 +112,16 @@ export class EmailService {
         `,
       });
 
-      this.logger.log(`Password reset email sent successfully to ${email}`);
+      this.logger.log(
+        `Password reset email sent successfully to ${redactEmail(email)}`,
+      );
       this.logger.debug(`Email response: ${JSON.stringify(result)}`);
       return true;
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       this.logger.error(
-        `Failed to send password reset email to ${email}: ${error.message}`,
+        `Failed to send password reset email to ${redactEmail(email)}: ${errorMessage}`,
       );
       this.logger.error(`Error details:`, error);
       return false;

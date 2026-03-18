@@ -38,6 +38,7 @@ export default tseslint.config(
         varsIgnorePattern: '^_',
         destructuredArrayIgnorePattern: '^_',
       }],
+      'no-console': ['error', { allow: ['warn', 'error'] }],
       "prettier/prettier": ["error", { endOfLine: "auto" }],
     },
   },
