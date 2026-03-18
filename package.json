@@ -1,8 +1,8 @@
 {
   "name": "fx-trading-app",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "FX Trading App backend with NestJS, PostgreSQL, Redis, and real-time currency conversion",
+  "author": "Idris Akintobi <akintobiidris@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
