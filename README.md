@@ -4,13 +4,14 @@ A production-ready multi-currency FX trading application backend built with Nest
 
 ## Features
 
-- 🔐 **Secure Authentication**: JWT-based authentication with email verification via OTP
-- 💰 **Multi-Currency Wallet**: Support for NGN, USD, EUR, GBP, JPY, CAD, AUD
-- 💱 **Real-Time FX Rates**: Live exchange rates with Redis caching
+- 🔐 **Secure Authentication**: JWT-based authentication with email verification via OTP and password reset
+- 💰 **Multi-Currency Wallet**: Support for NGN, USD, EUR, GBP
+- 💱 **Real-Time FX Rates**: Live exchange rates with Redis caching (5-minute TTL)
 - 🔄 **Currency Trading**: Convert and trade between currencies with distributed locking
 - 📊 **Transaction History**: Comprehensive transaction tracking with pagination and filtering
 - 🔒 **Idempotency**: Prevent duplicate transactions with idempotency keys
-- 🧪 **Comprehensive Testing**: 49 unit tests + 43 E2E tests
+- 🔐 **PII Protection**: Email redaction and secure logging practices
+- 🧪 **Comprehensive Testing**: 70 unit tests + 51 E2E tests = 121 total tests
 - 📝 **Postman Collection**: Complete API documentation with examples
 
 ## Tech Stack
@@ -115,6 +116,9 @@ The collection includes:
 - `POST /api/v1/auth/verify-email` - Verify email with OTP
 - `POST /api/v1/auth/send-otp` - Resend OTP
 - `POST /api/v1/auth/login` - Login and get JWT token
+- `POST /api/v1/auth/request-password-reset` - Request password reset code
+- `POST /api/v1/auth/reset-password` - Reset password with code
+- `POST /api/v1/auth/refresh` - Refresh access token
 
 #### Wallet
 - `GET /api/v1/wallet/balances` - Get all wallet balances
@@ -279,6 +283,7 @@ docs/
 - **Redis**: `REDIS_HOST`, `REDIS_PORT`, `REDIS_DB` (optional, default: 0)
 - **JWT**: `JWT_SECRET`, `JWT_EXPIRATION`, `JWT_REFRESH_SECRET`, `JWT_REFRESH_EXPIRATION`
 - **OTP**: `OTP_EXPIRATION_SEC`, `OTP_LENGTH`
+- **Password Reset**: `PASSWORD_RESET_TOKEN_EXPIRATION_SEC`, `PASSWORD_RESET_TOKEN_LENGTH`
 - **FX Rates**: `FX_RATE_API_URL`, `FX_RATE_API_KEY`, `FX_RATE_CACHE_TTL_SEC`
 - **Email**: SMTP configuration (HOST, PORT, USER, PASSWORD, EMAIL_FROM)
 
@@ -287,14 +292,17 @@ docs/
 ## Security Features
 
 - ✅ Argon2 password hashing
-- ✅ JWT token authentication
+- ✅ JWT token authentication with refresh tokens
 - ✅ OTP verification with SHA-256 hashing
-- ✅ Rate limiting ready (implement with Redis)
+- ✅ Password reset with 6-digit codes (10-minute expiration)
+- ✅ PII redaction in logs (emails, tokens, passwords)
+- ✅ Rate limiting configured (global, ready for per-user)
 - ✅ CORS configured
 - ✅ Helmet for security headers
 - ✅ Input validation with class-validator
 - ✅ SQL injection prevention (TypeORM parameterized queries)
 - ✅ Distributed locks to prevent race conditions
+- ✅ userId excluded from API responses (security)
 
 ## Performance Optimizations
 
