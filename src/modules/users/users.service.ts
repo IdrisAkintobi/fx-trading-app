@@ -52,6 +52,11 @@ export class UsersService {
     await this.usersRepository.update(userId, { isVerified: true });
   }
 
+  async updatePassword(userId: string, newPassword: string): Promise<void> {
+    const hashedPassword = await argon2.hash(newPassword);
+    await this.usersRepository.update(userId, { password: hashedPassword });
+  }
+
   async validatePassword(
     password: string,
     hashedPassword: string,

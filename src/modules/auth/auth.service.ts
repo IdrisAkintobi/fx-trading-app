@@ -10,13 +10,17 @@ import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { RequestPasswordResetDto } from './dto/request-password-reset.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { OtpService } from './otp.service';
+import { PasswordResetService } from './password-reset.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly otpService: OtpService,
+    private readonly passwordResetService: PasswordResetService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
@@ -137,6 +141,56 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }
+  }
+
+  async requestPasswordReset(dto: RequestPasswordResetDto) {
+    const user = await this.usersService.findByEmail(dto.email);
+
+    // Always return success message even if user doesn't exist (security best practice)
+    if (!user) {
+      return {
+        message:
+          'If an account with that email exists, a password reset link has been sent.',
+      };
+    }
+
+    // Generate reset token
+    const resetToken = await this.passwordResetService.generateResetToken(
+      user.email,
+    );
+
+    // Send reset email
+    await this.emailService.sendPasswordReset(user.email, resetToken);
+
+    return {
+      message:
+        'If an account with that email exists, a password reset link has been sent.',
+    };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const user = await this.usersService.findByEmail(dto.email);
+
+    if (!user) {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
+
+    // Verify reset token
+    const isValid = await this.passwordResetService.verifyResetToken(
+      dto.email,
+      dto.token,
+    );
+
+    if (!isValid) {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
+
+    // Update password
+    await this.usersService.updatePassword(user.id, dto.newPassword);
+
+    return {
+      message: 'Password has been reset successfully',
+    };
   }
 
   private async generateTokens(userId: string, email: string, role: string) {

@@ -76,6 +76,12 @@ export class EnvironmentVariables {
   @IsNumber()
   OTP_LENGTH: number;
 
+  @IsNumber()
+  PASSWORD_RESET_TOKEN_EXPIRATION_SEC: number;
+
+  @IsNumber()
+  PASSWORD_RESET_TOKEN_LENGTH: number;
+
   @IsString()
   FX_RATE_API_URL: string;
 

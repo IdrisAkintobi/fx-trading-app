@@ -144,6 +144,24 @@ describe('UsersService', () => {
     });
   });
 
+  describe('updatePassword', () => {
+    it('should update user password', async () => {
+      const userId = '123e4567-e89b-12d3-a456-426614174000';
+      const newPassword = 'NewSecurePass123!';
+      const hashedPassword = '$argon2id$v=19$m=65536,t=3,p=4$newhashed';
+
+      (argon2.hash as jest.Mock).mockResolvedValue(hashedPassword);
+      mockUsersRepository.update.mockResolvedValue({ affected: 1 });
+
+      await service.updatePassword(userId, newPassword);
+
+      expect(argon2.hash).toHaveBeenCalledWith(newPassword);
+      expect(mockUsersRepository.update).toHaveBeenCalledWith(userId, {
+        password: hashedPassword,
+      });
+    });
+  });
+
   describe('validatePassword', () => {
     it('should return true for valid password', async () => {
       const password = 'SecurePass123!';

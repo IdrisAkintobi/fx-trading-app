@@ -75,4 +75,38 @@ export class EmailService {
       return false;
     }
   }
+
+  async sendPasswordReset(email: string, resetToken: string): Promise<boolean> {
+    try {
+      this.logger.log(`Attempting to send password reset email to ${email}`);
+
+      const result = await this.mailerService.sendMail({
+        to: email,
+        subject: 'Password Reset Code',
+        text: `Your password reset code is: ${resetToken}\n\nThis code will expire in 10 minutes.\n\nIf you didn't request this reset, please ignore this email and your password will remain unchanged.`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #333;">Password Reset Request</h2>
+            <p>You requested a password reset for your FX Trading App account.</p>
+            <p>Your password reset code is:</p>
+            <div style="background-color: #f4f4f4; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
+              ${resetToken}
+            </div>
+            <p style="color: #666;">This code will expire in 10 minutes.</p>
+            <p style="color: #666;">If you didn't request this reset, please ignore this email and your password will remain unchanged.</p>
+          </div>
+        `,
+      });
+
+      this.logger.log(`Password reset email sent successfully to ${email}`);
+      this.logger.debug(`Email response: ${JSON.stringify(result)}`);
+      return true;
+    } catch (error) {
+      this.logger.error(
+        `Failed to send password reset email to ${email}: ${error.message}`,
+      );
+      this.logger.error(`Error details:`, error);
+      return false;
+    }
+  }
 }

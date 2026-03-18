@@ -11,6 +11,7 @@ describe('Auth Flow (e2e)', () => {
   let app: INestApplication<App>;
   let emailService: EmailService;
   let generatedOtp: string;
+  let resetToken: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -20,6 +21,7 @@ describe('Auth Flow (e2e)', () => {
       .useValue({
         sendOtp: jest.fn().mockResolvedValue(true),
         sendWelcomeEmail: jest.fn().mockResolvedValue(true),
+        sendPasswordReset: jest.fn().mockResolvedValue(true),
       })
       .overrideProvider(FxRatesService)
       .useValue({
@@ -197,6 +199,154 @@ describe('Auth Flow (e2e)', () => {
         .post('/api/v1/auth/send-otp')
         .send({
           email: 'nonexistent@example.com',
+        })
+        .expect(400);
+    });
+  });
+
+  describe('Password Reset Flow', () => {
+    const testEmail = `reset-${Date.now()}@example.com`;
+    const testPassword = 'OldPassword123!';
+    const newPassword = 'NewPassword456!';
+    let userOtp: string;
+
+    // Register and verify a user first
+    beforeAll(async () => {
+      // Register
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/register')
+        .send({
+          email: testEmail,
+          password: testPassword,
+        })
+        .expect(201);
+
+      // Get OTP
+      const otpCall = (emailService.sendOtp as jest.Mock).mock.calls.find(
+        (call) => call[0] === testEmail,
+      );
+      if (otpCall) {
+        userOtp = otpCall[1];
+      }
+
+      // Verify email
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/verify-email')
+        .send({
+          email: testEmail,
+          otp: userOtp,
+        })
+        .expect(200);
+    });
+
+    it('should request password reset for existing user', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/auth/request-password-reset')
+        .send({
+          email: testEmail,
+        })
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body.message).toContain(
+        'If an account with that email exists',
+      );
+      expect(emailService.sendPasswordReset).toHaveBeenCalledWith(
+        testEmail,
+        expect.any(String),
+      );
+
+      // Capture the reset token from the mock call
+      const resetCall = (
+        emailService.sendPasswordReset as jest.Mock
+      ).mock.calls.find((call) => call[0] === testEmail);
+      if (resetCall) {
+        resetToken = resetCall[1];
+      }
+    });
+
+    it('should return success message for non-existent email (security)', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/auth/request-password-reset')
+        .send({
+          email: 'nonexistent@example.com',
+        })
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body.message).toContain(
+        'If an account with that email exists',
+      );
+    });
+
+    it('should fail to reset password with invalid token', async () => {
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/reset-password')
+        .send({
+          email: testEmail,
+          token: 'invalid_token',
+          newPassword,
+        })
+        .expect(400);
+    });
+
+    it('should reset password with valid token', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/auth/reset-password')
+        .send({
+          email: testEmail,
+          token: resetToken,
+          newPassword,
+        })
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body.message).toContain(
+        'Password has been reset successfully',
+      );
+    });
+
+    it('should not allow reusing the same reset token', async () => {
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/reset-password')
+        .send({
+          email: testEmail,
+          token: resetToken,
+          newPassword: 'AnotherPassword789!',
+        })
+        .expect(400);
+    });
+
+    it('should login with new password', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/v1/auth/login')
+        .send({
+          email: testEmail,
+          password: newPassword,
+        })
+        .expect(200);
+
+      expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('refreshToken');
+    });
+
+    it('should not login with old password', async () => {
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/login')
+        .send({
+          email: testEmail,
+          password: testPassword,
+        })
+        .expect(401);
+    });
+
+    it('should validate new password length', async () => {
+      await request(app.getHttpServer())
+        .post('/api/v1/auth/reset-password')
+        .send({
+          email: testEmail,
+          token: 'some_token',
+          newPassword: 'short',
         })
         .expect(400);
     });

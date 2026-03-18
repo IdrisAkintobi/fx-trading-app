@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { OtpService } from './otp.service';
+import { PasswordResetService } from './password-reset.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 
@@ -23,7 +24,7 @@ import { UsersModule } from '../users/users.module';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, OtpService],
-  exports: [JwtModule, AuthService, OtpService],
+  providers: [AuthService, OtpService, PasswordResetService],
+  exports: [JwtModule, AuthService, OtpService, PasswordResetService],
 })
 export class AuthModule {}
