@@ -1,18 +1,19 @@
+import { Exclude } from 'class-transformer';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
 import {
   Currency,
-  TransactionType,
   TransactionStatus,
+  TransactionType,
 } from '../../../common/constants/enums';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('transactions')
 export class Transaction {
@@ -21,10 +22,12 @@ export class Transaction {
 
   @Column()
   @Index()
+  @Exclude()
   userId: string;
 
   @ManyToOne(() => User, (user) => user.transactions, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @Column({

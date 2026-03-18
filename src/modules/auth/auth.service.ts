@@ -36,7 +36,6 @@ export class AuthService {
 
     return {
       message: 'Registration successful. Please check your email for OTP.',
-      userId: user.id,
     };
   }
 

@@ -1,15 +1,16 @@
+import { Exclude } from 'class-transformer';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
 import { Currency } from '../../../common/constants/enums';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('wallet_balances')
 @Index(['userId', 'currency'], { unique: true })
@@ -19,10 +20,12 @@ export class WalletBalance {
 
   @Column()
   @Index()
+  @Exclude()
   userId: string;
 
   @ManyToOne(() => User, (user) => user.walletBalances, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @Column({
