@@ -18,6 +18,7 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     this.client = new Redis({
       host: this.configService.get<string>('REDIS_HOST'),
       port: this.configService.get<number>('REDIS_PORT'),
+      db: this.configService.get<number>('REDIS_DB', 0),
       retryStrategy: (times) => {
         const delay = Math.min(times * 50, 2000);
         return delay;
@@ -139,5 +140,10 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
   // Multi for transactions
   multi() {
     return this.client.multi();
+  }
+
+  // Flush current database (mainly for testing)
+  async flushDb(): Promise<void> {
+    await this.client.flushdb();
   }
 }

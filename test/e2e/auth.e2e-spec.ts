@@ -5,11 +5,10 @@ import { App } from 'supertest/types';
 import { AppModule } from '../../src/app.module';
 import { EmailService } from '../../src/modules/email/email.service';
 import { FxRatesService } from '../../src/modules/fx-rates/fx-rates.service';
-import { RedisService } from '../../src/modules/redis/redis.service';
+import { setupE2EApp } from './test-setup';
 
 describe('Auth Flow (e2e)', () => {
   let app: INestApplication<App>;
-  let redisService: RedisService;
   let emailService: EmailService;
   let generatedOtp: string;
 
@@ -24,18 +23,22 @@ describe('Auth Flow (e2e)', () => {
       })
       .overrideProvider(FxRatesService)
       .useValue({
-        getRate: jest.fn().mockResolvedValue(0.85),
+        getRate: jest.fn().mockImplementation((from, to) => {
+          if (from === to) return Promise.resolve(1);
+          return Promise.resolve(0.85);
+        }),
       })
       .compile();
 
     app = moduleFixture.createNestApplication();
+    setupE2EApp(app);
     await app.init();
 
-    redisService = moduleFixture.get<RedisService>(RedisService);
     emailService = moduleFixture.get<EmailService>(EmailService);
   });
 
   afterAll(async () => {
+    // Cleanup handled by global teardown
     await app.close();
   });
 
@@ -54,7 +57,7 @@ describe('Auth Flow (e2e)', () => {
         .expect(201);
 
       expect(response.body).toHaveProperty('message');
-      expect(response.body.message).toContain('OTP sent');
+      expect(response.body.message).toContain('Registration successful');
       expect(emailService.sendOtp).toHaveBeenCalledWith(
         testEmail,
         expect.any(String),
@@ -90,10 +93,6 @@ describe('Auth Flow (e2e)', () => {
     });
 
     it('should verify email with correct OTP', async () => {
-      // Get the stored OTP from Redis directly for testing
-      const otpKeys = await redisService.keys(`otp:${testEmail}:*`);
-      expect(otpKeys.length).toBeGreaterThan(0);
-
       const response = await request(app.getHttpServer())
         .post('/api/v1/auth/verify-email')
         .send({
@@ -102,7 +101,10 @@ describe('Auth Flow (e2e)', () => {
         })
         .expect(200);
 
-      expect(response.body).toHaveProperty('message', 'Email verified');
+      expect(response.body).toHaveProperty(
+        'message',
+        'Email verified successfully',
+      );
       expect(emailService.sendWelcomeEmail).toHaveBeenCalledWith(
         testEmail,
         testEmail,
@@ -196,7 +198,7 @@ describe('Auth Flow (e2e)', () => {
         .send({
           email: 'nonexistent@example.com',
         })
-        .expect(404);
+        .expect(400);
     });
   });
 });

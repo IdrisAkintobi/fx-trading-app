@@ -6,6 +6,7 @@ import { AppModule } from '../../src/app.module';
 import { Currency } from '../../src/common/constants/enums';
 import { EmailService } from '../../src/modules/email/email.service';
 import { FxRatesService } from '../../src/modules/fx-rates/fx-rates.service';
+import { setupE2EApp } from './test-setup';
 
 describe('FX Rates (e2e)', () => {
   let app: INestApplication<App>;
@@ -22,11 +23,15 @@ describe('FX Rates (e2e)', () => {
       })
       .overrideProvider(FxRatesService)
       .useValue({
-        getRate: jest.fn().mockResolvedValue(0.85),
+        getRate: jest.fn().mockImplementation((from, to) => {
+          if (from === to) return Promise.resolve(1);
+          return Promise.resolve(0.85);
+        }),
       })
       .compile();
 
     app = moduleFixture.createNestApplication();
+    setupE2EApp(app);
     await app.init();
 
     // Create and verify a test user
@@ -55,6 +60,7 @@ describe('FX Rates (e2e)', () => {
   });
 
   afterAll(async () => {
+    // Cleanup handled by global teardown
     await app.close();
   });
 

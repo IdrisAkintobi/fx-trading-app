@@ -21,6 +21,9 @@ import { AppService } from './app.service';
       isGlobal: true,
       cache: true,
       validate,
+      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+      ignoreEnvFile: false,
+      expandVariables: true,
     }),
 
     // Database

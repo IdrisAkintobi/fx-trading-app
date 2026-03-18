@@ -82,7 +82,7 @@ describe('TransactionsService', () => {
       });
 
       expect(queryBuilder.andWhere).toHaveBeenCalledWith(
-        '(transaction.fromCurrency = :currency OR transaction.toCurrency = :currency)',
+        '("transaction"."fromCurrency"::text = :currency OR "transaction"."toCurrency"::text = :currency)',
         { currency: Currency.EUR },
       );
     });
@@ -146,7 +146,7 @@ describe('TransactionsService', () => {
       await service.getTransactionStats('user1', Currency.USD);
 
       expect(queryBuilder.andWhere).toHaveBeenCalledWith(
-        '(transaction.fromCurrency = :currency OR transaction.toCurrency = :currency)',
+        '("transaction"."fromCurrency"::text = :currency OR "transaction"."toCurrency"::text = :currency)',
         { currency: Currency.USD },
       );
     });

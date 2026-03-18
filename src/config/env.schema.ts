@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsEnum, IsBoolean } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export enum Environment {
   Development = 'development',
@@ -6,9 +12,20 @@ export enum Environment {
   Test = 'test',
 }
 
+export enum LogLevel {
+  Debug = 'debug',
+  Info = 'info',
+  Warn = 'warn',
+  Error = 'error',
+}
+
 export class EnvironmentVariables {
   @IsEnum(Environment)
   NODE_ENV: Environment;
+
+  @IsOptional()
+  @IsEnum(LogLevel)
+  LOG_LEVEL: LogLevel = LogLevel.Info;
 
   @IsNumber()
   PORT: number;
@@ -31,14 +48,15 @@ export class EnvironmentVariables {
   @IsBoolean()
   DATABASE_SYNC: boolean;
 
-  @IsBoolean()
-  DATABASE_LOGGING: boolean;
-
   @IsString()
   REDIS_HOST: string;
 
   @IsNumber()
   REDIS_PORT: number;
+
+  @IsOptional()
+  @IsNumber()
+  REDIS_DB?: number = 0;
 
   @IsString()
   JWT_SECRET: string;

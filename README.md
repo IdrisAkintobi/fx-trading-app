@@ -10,8 +10,8 @@ A production-ready multi-currency FX trading application backend built with Nest
 - 🔄 **Currency Trading**: Convert and trade between currencies with distributed locking
 - 📊 **Transaction History**: Comprehensive transaction tracking with pagination and filtering
 - 🔒 **Idempotency**: Prevent duplicate transactions with idempotency keys
-- 🧪 **Comprehensive Testing**: 49 unit tests + 4 E2E test suites
-- 📝 **OpenAPI Documentation**: Complete API specification for Postman/Insomnia
+- 🧪 **Comprehensive Testing**: 49 unit tests + 43 E2E tests
+- 📝 **Postman Collection**: Complete API documentation with examples
 
 ## Tech Stack
 
@@ -49,7 +49,7 @@ A production-ready multi-currency FX trading application backend built with Nest
 
 ```bash
 git clone <repository-url>
-cd pal-wallet
+cd fx-trading-app
 pnpm install
 ```
 
@@ -100,7 +100,13 @@ The API will be available at `http://localhost:3000`
 
 ## API Documentation
 
-Import the `openapi.yaml` file into Postman or Insomnia for complete API documentation with examples.
+Import the Postman collection from `docs/postman-collection.json` into Postman or Insomnia for complete API documentation with examples and pre-configured requests.
+
+The collection includes:
+- All API endpoints with example requests and responses
+- Authentication flow examples
+- Pre-configured environment variables
+- Comprehensive test scenarios
 
 ### Key Endpoints
 
@@ -145,15 +151,33 @@ pnpm test:cov
 
 ### Run E2E Tests
 
-E2E tests require a running database and Redis instance:
+**IMPORTANT:** E2E tests use a separate test database to avoid polluting your development data.
+
+#### Setup Test Database (One-time)
 
 ```bash
-# Start services
-docker-compose up -d
+# 1. Create test database (if using Docker Compose)
+docker exec -it fx-trading-postgres psql -U postgres -c "CREATE DATABASE fx_trading_test;"
 
-# Run E2E tests
+# 2. Copy and configure test environment
+cp .env.example .env.test
+# Edit .env.test and set DATABASE_NAME=fx_trading_test and REDIS_DB=1
+
+# 3. Run migrations on test database
+NODE_ENV=test node --env-file=.env.test node_modules/.bin/typeorm migration:run -d src/data-source.ts
+```
+
+#### Run Tests
+
+```bash
+# E2E tests will automatically use .env.test
 pnpm test:e2e
 ```
+
+**Note:** E2E tests use:
+- Database: `fx_trading_test` (separate from `fx_trading`)
+- Redis DB: `1` (separate from default DB `0`)
+- Mocked external services (Email, FX Rate API)
 
 ## Database Management
 
@@ -218,7 +242,7 @@ src/
 │   └── pagination/         # Pagination utilities
 ├── config/                 # Configuration
 │   ├── env.validation.ts   # Environment validation
-│   └── env.schema.ts       # Default values
+│   └── env.schema.ts       # Environment schema (no defaults - enforced)
 ├── database/               # Database configuration
 │   └── migrations/         # TypeORM migrations
 ├── modules/                # Feature modules
@@ -233,20 +257,32 @@ src/
 
 test/
 ├── e2e/                   # E2E test suites
+│   ├── test-setup.ts      # E2E app configuration
+│   └── test-utils.ts      # Cleanup utilities
 ├── unit/                  # Unit tests
-└── setup.ts              # Test configuration
+├── setup.ts              # Test configuration
+└── global-teardown.ts    # Clean database after all tests
+
+docs/
+└── postman-collection.json  # Postman API collection
 ```
 
 ## Configuration
 
-All configuration values have defaults defined in `src/config/env.schema.ts`. Environment variables override these defaults.
+**All environment variables are required** and must be set in `.env` file or via environment. The application will fail to start if any required variables are missing. See `.env.example` for the complete list.
 
 ### Key Configuration Options
 
-- **Port**: `PORT` (default: 3000)
-- **OTP Expiration**: `OTP_EXPIRATION_SEC` (default: 600 seconds)
-- **FX Rate Cache**: `FX_RATE_CACHE_TTL_SEC` (default: 300 seconds)
-- **JWT Expiration**: `JWT_EXPIRES_IN` (default: "1d")
+- **Environment**: `NODE_ENV` (development, production, test)
+- **Logging**: `LOG_LEVEL` (debug, info, warn, error) - default: info
+- **Database**: All database config required (HOST, PORT, USER, PASSWORD, NAME)
+- **Redis**: `REDIS_HOST`, `REDIS_PORT`, `REDIS_DB` (optional, default: 0)
+- **JWT**: `JWT_SECRET`, `JWT_EXPIRATION`, `JWT_REFRESH_SECRET`, `JWT_REFRESH_EXPIRATION`
+- **OTP**: `OTP_EXPIRATION_SEC`, `OTP_LENGTH`
+- **FX Rates**: `FX_RATE_API_URL`, `FX_RATE_API_KEY`, `FX_RATE_CACHE_TTL_SEC`
+- **Email**: SMTP configuration (HOST, PORT, USER, PASSWORD, EMAIL_FROM)
+
+> 💡 **Tip**: Copy `.env.example` to `.env` and update all values before running the app.
 
 ## Security Features
 

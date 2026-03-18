@@ -6,6 +6,7 @@ import { AppModule } from '../../src/app.module';
 import { Currency } from '../../src/common/constants/enums';
 import { EmailService } from '../../src/modules/email/email.service';
 import { FxRatesService } from '../../src/modules/fx-rates/fx-rates.service';
+import { setupE2EApp } from './test-setup';
 
 describe('Wallet Operations (e2e)', () => {
   let app: INestApplication<App>;
@@ -23,11 +24,15 @@ describe('Wallet Operations (e2e)', () => {
       })
       .overrideProvider(FxRatesService)
       .useValue({
-        getRate: jest.fn().mockResolvedValue(0.85),
+        getRate: jest.fn().mockImplementation((from, to) => {
+          if (from === to) return Promise.resolve(1);
+          return Promise.resolve(0.85);
+        }),
       })
       .compile();
 
     app = moduleFixture.createNestApplication();
+    setupE2EApp(app);
     await app.init();
 
     fxRatesService = moduleFixture.get<FxRatesService>(FxRatesService);
@@ -62,6 +67,7 @@ describe('Wallet Operations (e2e)', () => {
   });
 
   afterAll(async () => {
+    // Cleanup handled by global teardown
     await app.close();
   });
 
@@ -72,7 +78,8 @@ describe('Wallet Operations (e2e)', () => {
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
+      expect(response.body).toHaveProperty('data');
+      expect(Array.isArray(response.body.data)).toBe(true);
     });
 
     it('should fund wallet successfully', async () => {
@@ -243,10 +250,11 @@ describe('Wallet Operations (e2e)', () => {
         .set('Authorization', `Bearer ${accessToken}`)
         .expect(200);
 
-      expect(Array.isArray(response.body)).toBe(true);
-      expect(response.body.length).toBeGreaterThan(0);
-      expect(response.body[0]).toHaveProperty('currency');
-      expect(response.body[0]).toHaveProperty('balance');
+      expect(response.body).toHaveProperty('data');
+      expect(Array.isArray(response.body.data)).toBe(true);
+      expect(response.body.data.length).toBeGreaterThan(0);
+      expect(response.body.data[0]).toHaveProperty('currency');
+      expect(response.body.data[0]).toHaveProperty('balance');
     });
   });
 

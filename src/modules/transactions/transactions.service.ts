@@ -65,7 +65,7 @@ export class TransactionsService {
 
     if (currency) {
       queryBuilder = queryBuilder.andWhere(
-        '(transaction.fromCurrency = :currency OR transaction.toCurrency = :currency)',
+        '("transaction"."fromCurrency"::text = :currency OR "transaction"."toCurrency"::text = :currency)',
         { currency },
       );
     }
@@ -107,7 +107,7 @@ export class TransactionsService {
 
     if (currency) {
       queryBuilder.andWhere(
-        '(transaction.fromCurrency = :currency OR transaction.toCurrency = :currency)',
+        '("transaction"."fromCurrency"::text = :currency OR "transaction"."toCurrency"::text = :currency)',
         { currency },
       );
     }
