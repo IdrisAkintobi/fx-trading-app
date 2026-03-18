@@ -42,119 +42,14 @@
                     },
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/auth/register",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "auth",
-                        "register"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "register"]
                     },
                     "description": "Creates a new user account and sends an OTP to the provided email for verification.\nThe user account will be unverified until the OTP is confirmed.\n"
                   },
                   "response": [
                     {
-                      "name": "Validation error",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/auth/register",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "register"
-                          ]
-                        }
-                      },
-                      "status": "Bad Request",
-                      "code": 400,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"email must be an email\",\n    \"password must be longer than or equal to 8 characters\"\n  ],\n  \"error\": \"Bad Request\"\n}"
-                    },
-                    {
-                      "name": "Email already exists",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/auth/register",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "register"
-                          ]
-                        }
-                      },
-                      "status": "Conflict",
-                      "code": 409,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 409,\n  \"message\": \"User with this email already exists\",\n  \"error\": \"Conflict\"\n}"
-                    },
-                    {
-                      "name": "Register a new user",
+                      "name": "error - user already exists",
                       "originalRequest": {
                         "method": "POST",
                         "header": [
@@ -179,15 +74,350 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/register",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "register"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "register"]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "85"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:37:30 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"User with this email already exists\",\n    \"error\": \"Conflict\",\n    \"statusCode\": 409\n}"
+                    },
+                    {
+                      "name": "error - email validation",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"password\": \"SecurePass123!\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/register",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "register"]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "77"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:45:03 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": [\n        \"email must be an email\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+                    },
+                    {
+                      "name": "error - password validation",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"password\": \"Secureee\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/register",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "register"]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "108"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:45:51 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": [\n        \"password must be longer than or equal to 8 characters\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+                    },
+                    {
+                      "name": "success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"password\": \"Secureee\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/register",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "register"]
                         }
                       },
                       "status": "Created",
@@ -256,11 +486,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "119"
+                          "value": "71"
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 20:24:42 GMT"
+                          "value": "Wed, 18 Mar 2026 07:48:05 GMT"
                         },
                         {
                           "key": "Connection",
@@ -272,12 +502,61 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"message\": \"Registration successful. Please check your email for OTP.\",\n    \"userId\": \"961e0894-2879-4c4b-8304-cc127ccbe0a0\"\n}"
+                      "body": "{\n    \"message\": \"Registration successful. Please check your email for OTP.\"\n}"
                     }
                   ]
                 },
                 {
                   "name": "Verify email with OTP",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "// Extract & store bearer token at COLLECTION scope only",
+                          "// This test script intentionally avoids setting environment/global variables.",
+                          "",
+                          "pm.test(\"Verify email: response is JSON\", function () {",
+                          "  pm.expect(pm.response.text()).to.be.a(\"string\");",
+                          "});",
+                          "",
+                          "pm.test(\"Verify email: capture bearer token into collection variable\", function () {",
+                          "  let json;",
+                          "  try {",
+                          "    json = pm.response.json();",
+                          "  } catch (e) {",
+                          "    pm.expect.fail(\"Response body is not valid JSON; cannot extract token.\");",
+                          "  }",
+                          "",
+                          "  // Token path detection (supports common API shapes)",
+                          "  const candidates = [",
+                          "    json?.accessToken,",
+                          "    json?.access_token,",
+                          "    json?.token,",
+                          "    json?.data?.accessToken,",
+                          "    json?.data?.access_token,",
+                          "    json?.data?.token,",
+                          "    json?.data?.tokens?.accessToken,",
+                          "    json?.data?.tokens?.access_token,",
+                          "    json?.data?.tokens?.token,",
+                          "    json?.result?.accessToken,",
+                          "    json?.result?.access_token,",
+                          "    json?.result?.token,",
+                          "  ];",
+                          "",
+                          "  const token = candidates.find((t) => typeof t === \"string\" && t.trim().length > 0);",
+                          "",
+                          "  pm.expect(token, \"bearer token not found in response (checked common paths)\").to.be.a(\"string\");",
+                          "  pm.collectionVariables.set(\"bearerToken\", token);",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
                   "request": {
                     "method": "POST",
                     "header": [
@@ -292,7 +571,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"otp\": \"673493\"\n}",
+                      "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"otp\": \"041389\"\n}",
                       "options": {
                         "raw": {
                           "headerFamily": "json",
@@ -302,21 +581,14 @@
                     },
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/auth/verify-email",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "auth",
-                        "verify-email"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "verify-email"]
                     },
                     "description": "Verifies user's email address using the OTP sent during registration.\nOTP expires after 10 minutes and can only be used once.\n"
                   },
                   "response": [
                     {
-                      "name": "Invalid or expired OTP",
+                      "name": "error - invalid code",
                       "originalRequest": {
                         "method": "POST",
                         "header": [
@@ -331,7 +603,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"123456\"\n}",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"otp\": \"041380\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -341,31 +613,96 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/verify-email",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "verify-email"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "verify-email"]
                         }
                       },
                       "status": "Bad Request",
                       "code": 400,
-                      "_postman_previewlanguage": "json",
+                      "_postman_previewlanguage": null,
                       "header": [
                         {
-                          "key": "Content-Type",
-                          "value": "application/json"
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "75"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:49:01 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": \"Invalid or expired OTP\",\n  \"error\": \"Bad Request\"\n}"
+                      "body": "{\n    \"message\": \"Invalid or expired OTP\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
                     },
                     {
-                      "name": "User not found",
+                      "name": "error - user not found",
                       "originalRequest": {
                         "method": "POST",
                         "header": [
@@ -380,7 +717,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"123456\"\n}",
+                          "raw": "{\n  \"email\": \"esmart2347@gmail.com\",\n  \"otp\": \"041389\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -390,28 +727,93 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/verify-email",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "verify-email"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "verify-email"]
                         }
                       },
-                      "status": "Not Found",
-                      "code": 404,
-                      "_postman_previewlanguage": "json",
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
                       "header": [
                         {
-                          "key": "Content-Type",
-                          "value": "application/json"
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "67"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:49:49 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
+                      "body": "{\n    \"message\": \"User not found\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
                     },
                     {
                       "name": "success",
@@ -429,7 +831,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"otp\": \"673493\"\n}",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"otp\": \"041389\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -439,19 +841,12 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/verify-email",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "verify-email"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "verify-email"]
                         }
                       },
-                      "status": "Created",
-                      "code": 201,
+                      "status": "OK",
+                      "code": 200,
                       "_postman_previewlanguage": null,
                       "header": [
                         {
@@ -520,7 +915,7 @@
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 20:29:10 GMT"
+                          "value": "Wed, 18 Mar 2026 07:50:58 GMT"
                         },
                         {
                           "key": "Connection",
@@ -532,7 +927,558 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"message\": \"Email verified successfully\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NjFlMDg5NC0yODc5LTRjNGItODMwNC1jYzEyN2NjYmUwYTAiLCJlbWFpbCI6ImVzbWFydDIzNEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3Mzc3OTM1MCwiZXhwIjoxNzczNzgwMjUwfQ.Lbn_crDjetg3_cq-_1J11cjwJqqH6M5QPW-6_btzcls\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NjFlMDg5NC0yODc5LTRjNGItODMwNC1jYzEyN2NjYmUwYTAiLCJlbWFpbCI6ImVzbWFydDIzNEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3Mzc3OTM1MCwiZXhwIjoxNzc0Mzg0MTUwfQ.dW-ksr2_7szmiBPpLgwqIKylhjRV89XkXCvG28UmTds\"\n}"
+                      "body": "{\n    \"message\": \"Email verified successfully\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNTdiNjQ5Ny0zZmQ2LTRiYmYtOGYxNy01NGM2NzM2ZDVjYzgiLCJlbWFpbCI6ImVzbWFydDIzNEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3MzgyMDI1OCwiZXhwIjoxNzczODIxMTU4fQ.udSDSMJxB2oDskz_WD4c78bJ4Lka_CUCSE68BtXUcxE\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNTdiNjQ5Ny0zZmQ2LTRiYmYtOGYxNy01NGM2NzM2ZDVjYzgiLCJlbWFpbCI6ImVzbWFydDIzNEBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3MzgyMDI1OCwiZXhwIjoxNzc0NDI1MDU4fQ.T07xLc4F_BkdETr1vpMHEDCSiw7Z52zCsIirmGpMfuw\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Request password reset",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [""],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"esmart234@gmail.com\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/auth/request-password-reset",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "request-password-reset"]
+                    },
+                    "description": "Verifies user's email address using the OTP sent during registration.\nOTP expires after 10 minutes and can only be used once.\n"
+                  },
+                  "response": [
+                    {
+                      "name": "error - user not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart2347@gmail.com\",\n  \"otp\": \"041389\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/verify-email",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "verify-email"]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "67"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:49:49 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"User not found\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+                    },
+                    {
+                      "name": "success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/request-password-reset",
+                          "host": ["{{baseUrl}}"],
+                          "path": [
+                            "api",
+                            "v1",
+                            "auth",
+                            "request-password-reset"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "88"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 08:19:53 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"If an account with that email exists, a password reset link has been sent.\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Reset password",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [""],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"token\": \"397969\",\n  \"newPassword\": \"SecurePass123!\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/auth/reset-password",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "reset-password"]
+                    },
+                    "description": "Verifies user's email address using the OTP sent during registration.\nOTP expires after 10 minutes and can only be used once.\n"
+                  },
+                  "response": [
+                    {
+                      "name": "error - user not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart2347@gmail.com\",\n  \"otp\": \"041389\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/verify-email",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "verify-email"]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "67"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:49:49 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"User not found\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+                    },
+                    {
+                      "name": "success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"token\": \"397969\",\n  \"newPassword\": \"SecurePass123!\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/reset-password",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "reset-password"]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "50"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 08:27:56 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"Password has been reset successfully\"\n}"
                     }
                   ]
                 },
@@ -562,68 +1508,12 @@
                     },
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/auth/send-otp",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "auth",
-                        "send-otp"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "send-otp"]
                     },
                     "description": "Sends a new OTP to the user's email. Can be used to resend OTP if the previous one expired.\nPrevious OTPs will be invalidated.\n"
                   },
                   "response": [
-                    {
-                      "name": "User not found",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/auth/send-otp",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "send-otp"
-                          ]
-                        }
-                      },
-                      "status": "Not Found",
-                      "code": 404,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
-                    },
                     {
                       "name": "success",
                       "originalRequest": {
@@ -650,15 +1540,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/send-otp",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "send-otp"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "send-otp"]
                         }
                       },
                       "status": "Created",
@@ -744,50 +1627,9 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"message\": \"OTP sent successfully\"\n}"
-                    }
-                  ]
-                },
-                {
-                  "name": "Login with email and password",
-                  "request": {
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"email\": \"esmart234@yahoo.com\",\n  \"password\": \"SecurePass123!\"\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
                     },
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/auth/login",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "auth",
-                        "login"
-                      ]
-                    },
-                    "description": "Authenticates user and returns a JWT access token.\nEmail must be verified before login is allowed.\n"
-                  },
-                  "response": [
                     {
-                      "name": "Invalid credentials or email not verified",
+                      "name": "error - user not found",
                       "originalRequest": {
                         "method": "POST",
                         "header": [
@@ -802,7 +1644,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePass123!\"\n}",
+                          "raw": "{\n  \"email\": \"esmart234@yahoo.com\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -811,30 +1653,179 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/v1/auth/login",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "login"
-                          ]
+                          "raw": "{{baseUrl}}/api/v1/auth/send-otp",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "send-otp"]
                         }
                       },
-                      "status": "Unauthorized",
-                      "code": 401,
-                      "_postman_previewlanguage": "json",
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": null,
                       "header": [
                         {
-                          "key": "Content-Type",
-                          "value": "application/json"
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "67"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:51:51 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n  \"statusCode\": 401,\n  \"message\": \"Invalid credentials\",\n  \"error\": \"Unauthorized\"\n}"
+                      "body": "{\n    \"message\": \"User not found\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Login with email and password",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "// Extract & store bearer token at COLLECTION scope only",
+                          "// This test script intentionally avoids setting environment/global variables.",
+                          "",
+                          "pm.test(\"Login: response is JSON\", function () {",
+                          "  pm.expect(pm.response.text()).to.be.a(\"string\");",
+                          "  // If it isn't JSON, this will throw and fail in the next test.",
+                          "});",
+                          "",
+                          "pm.test(\"Login: capture bearer token into collection variable\", function () {",
+                          "  let json;",
+                          "  try {",
+                          "    json = pm.response.json();",
+                          "  } catch (e) {",
+                          "    pm.expect.fail(\"Response body is not valid JSON; cannot extract token.\");",
+                          "  }",
+                          "",
+                          "  // Token path detection (supports common API shapes)",
+                          "  const candidates = [",
+                          "    json?.accessToken,",
+                          "    json?.access_token,",
+                          "    json?.token,",
+                          "    json?.data?.accessToken,",
+                          "    json?.data?.access_token,",
+                          "    json?.data?.token,",
+                          "    json?.data?.tokens?.accessToken,",
+                          "    json?.data?.tokens?.access_token,",
+                          "    json?.data?.tokens?.token,",
+                          "    json?.result?.accessToken,",
+                          "    json?.result?.access_token,",
+                          "    json?.result?.token,",
+                          "  ];",
+                          "",
+                          "  const token = candidates.find((t) => typeof t === \"string\" && t.trim().length > 0);",
+                          "",
+                          "  pm.expect(token, \"bearer token not found in response (checked common paths)\").to.be.a(\"string\");",
+                          "  pm.collectionVariables.set(\"bearerToken\", token);",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"esmart234@gmail.com\",\n  \"password\": \"SecurePass123!\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
                     },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/auth/login",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "auth", "login"]
+                    },
+                    "description": "Authenticates user and returns a JWT access token.\nEmail must be verified before login is allowed.\n"
+                  },
+                  "response": [
                     {
                       "name": "success",
                       "originalRequest": {
@@ -861,15 +1852,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/auth/login",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "auth",
-                            "login"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "login"]
                         }
                       },
                       "status": "Created",
@@ -955,6 +1939,120 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MGM3MDdlYS03NDIwLTRmOTctYTg3Ny03MmNhMWVhYjYyNDAiLCJlbWFpbCI6ImVzbWFydDIzNEB5YWhvby5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3Mzc3OTYyNiwiZXhwIjoxNzczNzgwNTI2fQ.nTmZrbyVOMagIJqGaxDCvSKckBA5adX_4-khkFXXMlE\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MGM3MDdlYS03NDIwLTRmOTctYTg3Ny03MmNhMWVhYjYyNDAiLCJlbWFpbCI6ImVzbWFydDIzNEB5YWhvby5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc3Mzc3OTYyNiwiZXhwIjoxNzc0Mzg0NDI2fQ.0AUcl6XkPQuRjwZBgWdOuA4JTyCGiYxTs0yV3LtiVlo\"\n}"
+                    },
+                    {
+                      "name": "error - invalid credentials",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"esmart234@yahoo.com\",\n  \"password\": \"SecurePass123!\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/auth/login",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "auth", "login"]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "73"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:34:40 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"message\": \"Invalid credentials\",\n    \"error\": \"Unauthorized\",\n    \"statusCode\": 401\n}"
                     }
                   ]
                 }
@@ -985,15 +2083,8 @@
                     ],
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/users/profile",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "users",
-                        "profile"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "users", "profile"]
                     },
                     "description": "Returns the authenticated user's profile information"
                   },
@@ -1010,15 +2101,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/users/profile",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "users",
-                            "profile"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "users", "profile"]
                         }
                       },
                       "status": "Unauthorized",
@@ -1117,15 +2201,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/users/profile",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "users",
-                            "profile"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "users", "profile"]
                         }
                       },
                       "status": "OK",
@@ -1241,15 +2318,8 @@
                     ],
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/wallet/balances",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "wallet",
-                        "balances"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "wallet", "balances"]
                     },
                     "description": "Returns all currency balances for the authenticated user"
                   },
@@ -1271,15 +2341,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/balances",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "balances"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "balances"]
                         }
                       },
                       "status": "OK",
@@ -1306,15 +2369,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/balances",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "balances"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "balances"]
                         }
                       },
                       "status": "OK",
@@ -1413,15 +2469,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/balances",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "balances"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "balances"]
                         }
                       },
                       "status": "OK",
@@ -1490,11 +2539,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "478"
+                          "value": "704"
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 22:25:18 GMT"
+                          "value": "Wed, 18 Mar 2026 07:58:37 GMT"
                         },
                         {
                           "key": "Connection",
@@ -1506,7 +2555,7 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"data\": [\n        {\n            \"id\": \"5b003737-678a-4b31-bb0f-8ed685ee4489\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"currency\": \"USD\",\n            \"balance\": \"1200.00\",\n            \"createdAt\": \"2026-03-17T20:44:15.540Z\",\n            \"updatedAt\": \"2026-03-17T21:02:09.079Z\"\n        },\n        {\n            \"id\": \"0842cc53-c3ea-45f3-9ab4-1a892436deff\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"currency\": \"EUR\",\n            \"balance\": \"250.00\",\n            \"createdAt\": \"2026-03-17T21:25:01.814Z\",\n            \"updatedAt\": \"2026-03-17T21:25:01.814Z\"\n        }\n    ],\n    \"message\": \"Wallet balances retrieved successfully\"\n}"
+                      "body": "{\n    \"data\": [\n        {\n            \"id\": \"36525be3-ca8e-4d14-af24-fd6a25bae139\",\n            \"currency\": \"NGN\",\n            \"balance\": \"203853.89\",\n            \"createdAt\": \"2026-03-18T06:57:06.874Z\",\n            \"updatedAt\": \"2026-03-18T06:57:06.874Z\"\n        },\n        {\n            \"id\": \"7d7d021e-9792-49ae-841a-4481a02fec0c\",\n            \"currency\": \"USD\",\n            \"balance\": \"850.00\",\n            \"createdAt\": \"2026-03-18T06:55:52.499Z\",\n            \"updatedAt\": \"2026-03-18T06:57:06.874Z\"\n        },\n        {\n            \"id\": \"ca28455c-722d-4035-b8f9-e64f57641331\",\n            \"currency\": \"EUR\",\n            \"balance\": \"850.00\",\n            \"createdAt\": \"2026-03-18T06:56:06.559Z\",\n            \"updatedAt\": \"2026-03-18T06:58:13.608Z\"\n        },\n        {\n            \"id\": \"09a5f715-729e-4387-95bd-aefceadda3e7\",\n            \"currency\": \"GBP\",\n            \"balance\": \"129.60\",\n            \"createdAt\": \"2026-03-18T06:58:13.608Z\",\n            \"updatedAt\": \"2026-03-18T06:58:13.608Z\"\n        }\n    ],\n    \"message\": \"Wallet balances retrieved successfully\"\n}"
                     }
                   ]
                 },
@@ -1532,16 +2581,8 @@
                     ],
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/wallet/balance/:currency",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "wallet",
-                        "balance",
-                        ":currency"
-                      ],
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "wallet", "balance", ":currency"],
                       "variable": [
                         {
                           "key": "currency",
@@ -1569,9 +2610,7 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/balance/:currency",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
+                          "host": ["{{baseUrl}}"],
                           "path": [
                             "api",
                             "v1",
@@ -1616,9 +2655,7 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/balance/:currency",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
+                          "host": ["{{baseUrl}}"],
                           "path": [
                             "api",
                             "v1",
@@ -1684,15 +2721,8 @@
                     },
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/wallet/fund",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "wallet",
-                        "fund"
-                      ]
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "wallet", "fund"]
                     },
                     "description": "Add funds to a specific currency wallet.\n\n**Idempotency**: Use the `idempotencyKey` to prevent duplicate transactions.\nIf a transaction with the same key exists, it will be returned instead of creating a new one.\n"
                   },
@@ -1723,15 +2753,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/fund",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "fund"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "fund"]
                         }
                       },
                       "status": "Unauthorized",
@@ -1819,127 +2842,6 @@
                       "body": "{\n    \"message\": \"Invalid token\",\n    \"error\": \"Unauthorized\",\n    \"statusCode\": 401\n}"
                     },
                     {
-                      "name": "success",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"currency\": \"USD\",\n  \"amount\": 200,\n  \"idempotencyKey\": \"fund-2024-01-15-001\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/fund",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "fund"
-                          ]
-                        }
-                      },
-                      "status": "Created",
-                      "code": 201,
-                      "_postman_previewlanguage": null,
-                      "header": [
-                        {
-                          "key": "Content-Security-Policy",
-                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
-                        },
-                        {
-                          "key": "Cross-Origin-Opener-Policy",
-                          "value": "same-origin"
-                        },
-                        {
-                          "key": "Cross-Origin-Resource-Policy",
-                          "value": "same-origin"
-                        },
-                        {
-                          "key": "Origin-Agent-Cluster",
-                          "value": "?1"
-                        },
-                        {
-                          "key": "Referrer-Policy",
-                          "value": "no-referrer"
-                        },
-                        {
-                          "key": "Strict-Transport-Security",
-                          "value": "max-age=31536000; includeSubDomains"
-                        },
-                        {
-                          "key": "X-Content-Type-Options",
-                          "value": "nosniff"
-                        },
-                        {
-                          "key": "X-DNS-Prefetch-Control",
-                          "value": "off"
-                        },
-                        {
-                          "key": "X-Download-Options",
-                          "value": "noopen"
-                        },
-                        {
-                          "key": "X-Frame-Options",
-                          "value": "SAMEORIGIN"
-                        },
-                        {
-                          "key": "X-Permitted-Cross-Domain-Policies",
-                          "value": "none"
-                        },
-                        {
-                          "key": "X-XSS-Protection",
-                          "value": "0"
-                        },
-                        {
-                          "key": "vary",
-                          "value": "Origin"
-                        },
-                        {
-                          "key": "access-control-allow-credentials",
-                          "value": "true"
-                        },
-                        {
-                          "key": "content-type",
-                          "value": "application/json; charset=utf-8"
-                        },
-                        {
-                          "key": "content-length",
-                          "value": "325"
-                        },
-                        {
-                          "key": "Date",
-                          "value": "Tue, 17 Mar 2026 22:05:12 GMT"
-                        },
-                        {
-                          "key": "Connection",
-                          "value": "keep-alive"
-                        },
-                        {
-                          "key": "Keep-Alive",
-                          "value": "timeout=72"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n    \"id\": \"a1aa2642-383c-4d40-ba6e-cec7dd652605\",\n    \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n    \"type\": \"FUND\",\n    \"fromCurrency\": null,\n    \"toCurrency\": \"USD\",\n    \"fromAmount\": null,\n    \"toAmount\": \"200.00\",\n    \"rate\": null,\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"fund-2024-01-15-001\",\n    \"metadata\": {\n        \"balance\": \"1200\"\n    },\n    \"createdAt\": \"2026-03-17T21:02:09.079Z\"\n}"
-                    },
-                    {
                       "name": "error - invalid amount",
                       "originalRequest": {
                         "method": "POST",
@@ -1965,15 +2867,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/fund",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "fund"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "fund"]
                         }
                       },
                       "status": "Bad Request",
@@ -2059,111 +2954,6 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"message\": [\n        \"Maximum funding amount is 1,000,000\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
-                    }
-                  ]
-                },
-                {
-                  "name": "Convert currency",
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{bearerToken}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"fromCurrency\": \"USD\",\n  \"toCurrency\": \"NGN\",\n  \"amount\": 100,\n  \"idempotencyKey\": \"convert-2024-01-15-001\"\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "wallet",
-                        "convert"
-                      ]
-                    },
-                    "description": "Convert funds from one currency to another using real-time exchange rates.\n\nThe operation:\n1. Fetches the current exchange rate\n2. Deducts the amount from source currency\n3. Credits the converted amount to target currency\n\n**Note**: Distributed locks are used to prevent race conditions.\n"
-                  },
-                  "response": [
-                    {
-                      "name": "Unauthorized",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          },
-                          {
-                            "description": "Added as a part of security scheme: bearer",
-                            "key": "Authorization",
-                            "value": "Bearer <token>"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"fromCurrency\": \"USD\",\n  \"toCurrency\": \"EUR\",\n  \"amount\": 100,\n  \"idempotencyKey\": \"convert-20240115-001\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
-                        }
-                      },
-                      "status": "Unauthorized",
-                      "code": 401,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
                     },
                     {
                       "name": "success",
@@ -2181,7 +2971,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"fromCurrency\": \"USD\",\n  \"toCurrency\": \"NGN\",\n  \"amount\": 100,\n  \"idempotencyKey\": \"convert-2024-01-15-001\"\n}",
+                          "raw": "{\n  \"currency\": \"USD\",\n  \"amount\": 1000,\n  \"idempotencyKey\": \"fund-2024-01-15-001\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -2190,16 +2980,9 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
+                          "raw": "{{baseUrl}}/api/v1/wallet/fund",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "fund"]
                         }
                       },
                       "status": "Created",
@@ -2268,11 +3051,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "377"
+                          "value": "278"
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 22:33:58 GMT"
+                          "value": "Wed, 18 Mar 2026 07:56:06 GMT"
                         },
                         {
                           "key": "Connection",
@@ -2284,8 +3067,52 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"id\": \"2e3ba565-0c8a-447f-b735-8b473853e31d\",\n    \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n    \"type\": \"CONVERT\",\n    \"fromCurrency\": \"USD\",\n    \"toCurrency\": \"NGN\",\n    \"fromAmount\": \"100\",\n    \"toAmount\": \"136424.14\",\n    \"rate\": \"1364.2414\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"convert-2024-01-15-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"1000\",\n        \"targetBalance\": \"136424.14\"\n    },\n    \"createdAt\": \"2026-03-17T21:33:58.180Z\"\n}"
+                      "body": "{\n    \"id\": \"a0c8b3d4-2892-4bd8-bd4e-ba8aa904eea9\",\n    \"type\": \"FUND\",\n    \"fromCurrency\": null,\n    \"toCurrency\": \"EUR\",\n    \"fromAmount\": null,\n    \"toAmount\": \"1000\",\n    \"rate\": null,\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"fund-2024-01-15-002\",\n    \"metadata\": {\n        \"balance\": \"1000.00\"\n    },\n    \"createdAt\": \"2026-03-18T06:56:06.559Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Convert currency",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
                     },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fromCurrency\": \"USD\",\n  \"toCurrency\": \"NGN\",\n  \"amount\": 100,\n  \"idempotencyKey\": \"convert-2024-01-15-001\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/wallet/convert",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "wallet", "convert"]
+                    },
+                    "description": "Convert funds from one currency to another using real-time exchange rates.\n\nThe operation:\n1. Fetches the current exchange rate\n2. Deducts the amount from source currency\n3. Credits the converted amount to target currency\n\n**Note**: Distributed locks are used to prevent race conditions.\n"
+                  },
+                  "response": [
                     {
                       "name": "error - insufficient balance",
                       "originalRequest": {
@@ -2312,15 +3139,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "convert"]
                         }
                       },
                       "status": "Bad Request",
@@ -2433,15 +3253,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "convert"]
                         }
                       },
                       "status": "Bad Request",
@@ -2554,15 +3367,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "convert"]
                         }
                       },
                       "status": "Not Found",
@@ -2675,15 +3481,8 @@
                         },
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/wallet/convert",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "convert"
-                          ]
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "convert"]
                         }
                       },
                       "status": "Bad Request",
@@ -2769,165 +3568,6 @@
                       ],
                       "cookie": [],
                       "body": "{\n    \"message\": [\n        \"Minimum conversion amount is 0.01\",\n        \"amount must be a positive number\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
-                    }
-                  ]
-                },
-                {
-                  "name": "Trade currency",
-                  "request": {
-                    "auth": {
-                      "type": "bearer",
-                      "bearer": [
-                        {
-                          "key": "token",
-                          "value": "{{bearerToken}}",
-                          "type": "string"
-                        }
-                      ]
-                    },
-                    "method": "POST",
-                    "header": [
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"fromCurrency\": \"NGN\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/api/v1/wallet/trade",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "wallet",
-                        "trade"
-                      ]
-                    },
-                    "description": "Trade funds from one currency to another. Similar to convert but marked as TRADE transaction.\nUses real-time exchange rates and implements the same locking mechanism as convert.\n"
-                  },
-                  "response": [
-                    {
-                      "name": "Bad request",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          },
-                          {
-                            "description": "Added as a part of security scheme: bearer",
-                            "key": "Authorization",
-                            "value": "Bearer <token>"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"fromCurrency\": \"EUR\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "trade"
-                          ]
-                        }
-                      },
-                      "status": "Bad Request",
-                      "code": 400,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
-                    },
-                    {
-                      "name": "Unauthorized",
-                      "originalRequest": {
-                        "method": "POST",
-                        "header": [
-                          {
-                            "key": "Content-Type",
-                            "value": "application/json"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          },
-                          {
-                            "description": "Added as a part of security scheme: bearer",
-                            "key": "Authorization",
-                            "value": "Bearer <token>"
-                          }
-                        ],
-                        "body": {
-                          "mode": "raw",
-                          "raw": "{\n  \"fromCurrency\": \"EUR\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
-                          "options": {
-                            "raw": {
-                              "headerFamily": "json",
-                              "language": "json"
-                            }
-                          }
-                        },
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "trade"
-                          ]
-                        }
-                      },
-                      "status": "Unauthorized",
-                      "code": 401,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
                     },
                     {
                       "name": "success",
@@ -2945,7 +3585,7 @@
                         ],
                         "body": {
                           "mode": "raw",
-                          "raw": "{\n  \"fromCurrency\": \"NGN\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
+                          "raw": "{\n  \"fromCurrency\": \"USD\",\n  \"toCurrency\": \"NGN\",\n  \"amount\": 150,\n  \"idempotencyKey\": \"convert-2024-01-15-001\"\n}",
                           "options": {
                             "raw": {
                               "headerFamily": "json",
@@ -2954,16 +3594,9 @@
                           }
                         },
                         "url": {
-                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "wallet",
-                            "trade"
-                          ]
+                          "raw": "{{baseUrl}}/api/v1/wallet/convert",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "convert"]
                         }
                       },
                       "status": "Created",
@@ -3032,11 +3665,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "382"
+                          "value": "329"
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 22:50:29 GMT"
+                          "value": "Wed, 18 Mar 2026 07:57:06 GMT"
                         },
                         {
                           "key": "Connection",
@@ -3048,7 +3681,259 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"id\": \"8e9f46fe-b86c-4cf1-a9c9-aa6ff015c57e\",\n    \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n    \"type\": \"TRADE\",\n    \"fromCurrency\": \"NGN\",\n    \"toCurrency\": \"GBP\",\n    \"fromAmount\": \"50\",\n    \"toAmount\": \"0.027306999999999998\",\n    \"rate\": \"0.00054614\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"trade-20240115-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"136374.14\",\n        \"targetBalance\": \"0.03\"\n    },\n    \"createdAt\": \"2026-03-17T21:50:29.309Z\"\n}"
+                      "body": "{\n    \"id\": \"3d00789a-9627-45d8-ac63-b52cff3d25e5\",\n    \"type\": \"CONVERT\",\n    \"fromCurrency\": \"USD\",\n    \"toCurrency\": \"NGN\",\n    \"fromAmount\": \"150\",\n    \"toAmount\": \"203853.885\",\n    \"rate\": \"1359.0259\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"convert-2024-01-15-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"850\",\n        \"targetBalance\": \"203853.89\"\n    },\n    \"createdAt\": \"2026-03-18T06:57:06.874Z\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Trade currency",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fromCurrency\": \"NGN\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/wallet/trade",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "wallet", "trade"]
+                    },
+                    "description": "Trade funds from one currency to another. Similar to convert but marked as TRADE transaction.\nUses real-time exchange rates and implements the same locking mechanism as convert.\n"
+                  },
+                  "response": [
+                    {
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromCurrency\": \"EUR\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "trade"]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
+                    },
+                    {
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromCurrency\": \"EUR\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 50,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "trade"]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"statusCode\": 400,\n  \"message\": [\n    \"string\",\n    \"string\"\n  ],\n  \"error\": \"Bad Request\"\n}"
+                    },
+                    {
+                      "name": "success",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"fromCurrency\": \"EUR\",\n  \"toCurrency\": \"GBP\",\n  \"amount\": 150,\n  \"idempotencyKey\": \"trade-20240115-001\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/wallet/trade",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "wallet", "trade"]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": null,
+                      "header": [
+                        {
+                          "key": "Content-Security-Policy",
+                          "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                        },
+                        {
+                          "key": "Cross-Origin-Opener-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Cross-Origin-Resource-Policy",
+                          "value": "same-origin"
+                        },
+                        {
+                          "key": "Origin-Agent-Cluster",
+                          "value": "?1"
+                        },
+                        {
+                          "key": "Referrer-Policy",
+                          "value": "no-referrer"
+                        },
+                        {
+                          "key": "Strict-Transport-Security",
+                          "value": "max-age=31536000; includeSubDomains"
+                        },
+                        {
+                          "key": "X-Content-Type-Options",
+                          "value": "nosniff"
+                        },
+                        {
+                          "key": "X-DNS-Prefetch-Control",
+                          "value": "off"
+                        },
+                        {
+                          "key": "X-Download-Options",
+                          "value": "noopen"
+                        },
+                        {
+                          "key": "X-Frame-Options",
+                          "value": "SAMEORIGIN"
+                        },
+                        {
+                          "key": "X-Permitted-Cross-Domain-Policies",
+                          "value": "none"
+                        },
+                        {
+                          "key": "X-XSS-Protection",
+                          "value": "0"
+                        },
+                        {
+                          "key": "vary",
+                          "value": "Origin"
+                        },
+                        {
+                          "key": "access-control-allow-credentials",
+                          "value": "true"
+                        },
+                        {
+                          "key": "content-type",
+                          "value": "application/json; charset=utf-8"
+                        },
+                        {
+                          "key": "content-length",
+                          "value": "311"
+                        },
+                        {
+                          "key": "Date",
+                          "value": "Wed, 18 Mar 2026 07:58:13 GMT"
+                        },
+                        {
+                          "key": "Connection",
+                          "value": "keep-alive"
+                        },
+                        {
+                          "key": "Keep-Alive",
+                          "value": "timeout=72"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n    \"id\": \"8141e95f-7d47-44d4-bcef-9fe76fc64c46\",\n    \"type\": \"TRADE\",\n    \"fromCurrency\": \"EUR\",\n    \"toCurrency\": \"GBP\",\n    \"fromAmount\": \"150\",\n    \"toAmount\": \"129.6\",\n    \"rate\": \"0.864\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"trade-20240115-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"850\",\n        \"targetBalance\": \"129.60\"\n    },\n    \"createdAt\": \"2026-03-18T06:58:13.608Z\"\n}"
                     }
                   ]
                 }
@@ -3079,15 +3964,8 @@
                     ],
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/fx-rates/rate?from=NGN&to=USD",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "fx-rates",
-                        "rate"
-                      ],
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "fx-rates", "rate"],
                       "query": [
                         {
                           "key": "from",
@@ -3116,15 +3994,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/fx-rates/rate?from=NGN&to=USD",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "fx-rates",
-                            "rate"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "fx-rates", "rate"],
                           "query": [
                             {
                               "key": "from",
@@ -3235,15 +4106,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/fx-rates/rate?from=NGN&to=USQ",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "fx-rates",
-                            "rate"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "fx-rates", "rate"],
                           "query": [
                             {
                               "key": "from",
@@ -3370,15 +4234,9 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&type=CONVERT&currency=USD&startDate=2024-01-01T00:00:00Z&endDate=2024-01-31T23:59:59Z",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "transactions"
-                      ],
+                      "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&startDate=2024-01-01T00:00:00Z",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "transactions"],
                       "query": [
                         {
                           "key": "page",
@@ -3393,12 +4251,14 @@
                         {
                           "key": "type",
                           "value": "CONVERT",
-                          "description": "Filter by transaction type"
+                          "description": "Filter by transaction type",
+                          "disabled": true
                         },
                         {
                           "key": "currency",
                           "value": "USD",
-                          "description": "Filter by currency (matches fromCurrency or toCurrency)"
+                          "description": "Filter by currency (matches fromCurrency or toCurrency)",
+                          "disabled": true
                         },
                         {
                           "key": "startDate",
@@ -3408,84 +4268,14 @@
                         {
                           "key": "endDate",
                           "value": "2024-01-31T23:59:59Z",
-                          "description": "Filter transactions until this date"
+                          "description": "Filter transactions until this date",
+                          "disabled": true
                         }
                       ]
                     },
                     "description": "Returns paginated transaction history for the authenticated user.\n\n**Filters**: type, currency, date range\n**Sorting**: Most recent first (descending by createdAt)\n"
                   },
                   "response": [
-                    {
-                      "name": "Transactions retrieved successfully",
-                      "originalRequest": {
-                        "method": "GET",
-                        "header": [
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          },
-                          {
-                            "description": "Added as a part of security scheme: bearer",
-                            "key": "Authorization",
-                            "value": "Bearer <token>"
-                          }
-                        ],
-                        "url": {
-                          "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&type=CONVERT&currency=USD&startDate=2024-01-01T00:00:00Z&endDate=2024-01-31T23:59:59Z",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions"
-                          ],
-                          "query": [
-                            {
-                              "description": "Page number",
-                              "key": "page",
-                              "value": "1"
-                            },
-                            {
-                              "description": "Items per page",
-                              "key": "limit",
-                              "value": "20"
-                            },
-                            {
-                              "description": "Filter by transaction type",
-                              "key": "type",
-                              "value": "CONVERT"
-                            },
-                            {
-                              "description": "Filter by currency (matches fromCurrency or toCurrency)",
-                              "key": "currency",
-                              "value": "USD"
-                            },
-                            {
-                              "description": "Filter transactions from this date",
-                              "key": "startDate",
-                              "value": "2024-01-01T00:00:00Z"
-                            },
-                            {
-                              "description": "Filter transactions until this date",
-                              "key": "endDate",
-                              "value": "2024-01-31T23:59:59Z"
-                            }
-                          ]
-                        }
-                      },
-                      "status": "OK",
-                      "code": 200,
-                      "_postman_previewlanguage": "json",
-                      "header": [
-                        {
-                          "key": "Content-Type",
-                          "value": "application/json"
-                        }
-                      ],
-                      "cookie": [],
-                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440012\",\n      \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"type\": \"TRADE\",\n      \"fromCurrency\": \"EUR\",\n      \"toCurrency\": \"GBP\",\n      \"fromAmount\": \"50\",\n      \"toAmount\": \"44\",\n      \"rate\": \"0.88\",\n      \"status\": \"COMPLETED\",\n      \"idempotencyKey\": \"trade-20240115-001\",\n      \"metadata\": \"{\\\"sourceBalance\\\":\\\"835.25\\\",\\\"targetBalance\\\":\\\"44.00\\\"}\",\n      \"createdAt\": \"2024-01-15T15:30:00Z\",\n      \"updatedAt\": \"2024-01-15T15:30:00Z\"\n    },\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440011\",\n      \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"type\": \"CONVERT\",\n      \"fromCurrency\": \"USD\",\n      \"toCurrency\": \"EUR\",\n      \"fromAmount\": \"100\",\n      \"toAmount\": \"85\",\n      \"rate\": \"0.85\",\n      \"status\": \"COMPLETED\",\n      \"idempotencyKey\": \"convert-20240115-001\",\n      \"metadata\": \"{\\\"sourceBalance\\\":\\\"2150.50\\\",\\\"targetBalance\\\":\\\"885.25\\\"}\",\n      \"createdAt\": \"2024-01-15T15:00:00Z\",\n      \"updatedAt\": \"2024-01-15T15:00:00Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 50,\n    \"page\": 1,\n    \"limit\": 20,\n    \"totalPages\": 3,\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": false\n  }\n}"
-                    },
                     {
                       "name": "Bad request - Invalid query parameters",
                       "originalRequest": {
@@ -3503,14 +4293,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&type=CONVERT&currency=USD&startDate=2024-01-01T00:00:00Z&endDate=2024-01-31T23:59:59Z",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions"],
                           "query": [
                             {
                               "description": "Page number",
@@ -3574,14 +4358,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&type=CONVERT&currency=USD&startDate=2024-01-01T00:00:00Z&endDate=2024-01-31T23:59:59Z",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions"],
                           "query": [
                             {
                               "description": "Page number",
@@ -3639,15 +4417,9 @@
                           }
                         ],
                         "url": {
-                          "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&startDate=2024-01-01T00:00:00Z&endDate=2027-01-31T23:59:59Z",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions"
-                          ],
+                          "raw": "{{baseUrl}}/api/v1/transactions?page=1&limit=20&startDate=2024-01-01T00:00:00Z",
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions"],
                           "query": [
                             {
                               "key": "page",
@@ -3678,8 +4450,9 @@
                             },
                             {
                               "key": "endDate",
-                              "value": "2027-01-31T23:59:59Z",
-                              "description": "Filter transactions until this date"
+                              "value": "2024-01-31T23:59:59Z",
+                              "description": "Filter transactions until this date",
+                              "disabled": true
                             }
                           ]
                         }
@@ -3750,11 +4523,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "2218"
+                          "value": "1329"
                         },
                         {
                           "key": "Date",
-                          "value": "Tue, 17 Mar 2026 22:59:33 GMT"
+                          "value": "Wed, 18 Mar 2026 07:59:34 GMT"
                         },
                         {
                           "key": "Connection",
@@ -3766,7 +4539,7 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"data\": [\n        {\n            \"id\": \"8e9f46fe-b86c-4cf1-a9c9-aa6ff015c57e\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"TRADE\",\n            \"fromCurrency\": \"NGN\",\n            \"toCurrency\": \"GBP\",\n            \"fromAmount\": \"50.00\",\n            \"toAmount\": \"0.03\",\n            \"rate\": \"0.00054614\",\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"trade-20240115-001\",\n            \"metadata\": {\n                \"sourceBalance\": \"136374.14\",\n                \"targetBalance\": \"0.03\"\n            },\n            \"createdAt\": \"2026-03-17T21:50:29.309Z\"\n        },\n        {\n            \"id\": \"2e3ba565-0c8a-447f-b735-8b473853e31d\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"CONVERT\",\n            \"fromCurrency\": \"USD\",\n            \"toCurrency\": \"NGN\",\n            \"fromAmount\": \"100.00\",\n            \"toAmount\": \"136424.14\",\n            \"rate\": \"1364.24140000\",\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"convert-2024-01-15-001\",\n            \"metadata\": {\n                \"sourceBalance\": \"1000\",\n                \"targetBalance\": \"136424.14\"\n            },\n            \"createdAt\": \"2026-03-17T21:33:58.180Z\"\n        },\n        {\n            \"id\": \"f5849d36-2b5b-4855-9f24-ef3b7b25af26\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"CONVERT\",\n            \"fromCurrency\": \"USD\",\n            \"toCurrency\": \"EUR\",\n            \"fromAmount\": \"100.00\",\n            \"toAmount\": \"87.06\",\n            \"rate\": \"0.87060000\",\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"convert-20240115-001\",\n            \"metadata\": {\n                \"sourceBalance\": \"1100\",\n                \"targetBalance\": \"337.06\"\n            },\n            \"createdAt\": \"2026-03-17T21:27:42.984Z\"\n        },\n        {\n            \"id\": \"d24d1c4a-d611-4467-99bc-82ee0f4354d8\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"FUND\",\n            \"fromCurrency\": null,\n            \"toCurrency\": \"EUR\",\n            \"fromAmount\": null,\n            \"toAmount\": \"250.00\",\n            \"rate\": null,\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"fund-2024-01-15-002\",\n            \"metadata\": {\n                \"balance\": \"250.00\"\n            },\n            \"createdAt\": \"2026-03-17T21:25:01.814Z\"\n        },\n        {\n            \"id\": \"a1aa2642-383c-4d40-ba6e-cec7dd652605\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"FUND\",\n            \"fromCurrency\": null,\n            \"toCurrency\": \"USD\",\n            \"fromAmount\": null,\n            \"toAmount\": \"200.00\",\n            \"rate\": null,\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"fund-2024-01-15-001\",\n            \"metadata\": {\n                \"balance\": \"1200\"\n            },\n            \"createdAt\": \"2026-03-17T21:02:09.079Z\"\n        },\n        {\n            \"id\": \"94a40913-b55f-4e40-aa1b-c4ea429b366f\",\n            \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n            \"type\": \"FUND\",\n            \"fromCurrency\": null,\n            \"toCurrency\": \"USD\",\n            \"fromAmount\": null,\n            \"toAmount\": \"1000.00\",\n            \"rate\": null,\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"fund-20240115-001\",\n            \"metadata\": {\n                \"balance\": \"1000.00\"\n            },\n            \"createdAt\": \"2026-03-17T20:44:15.540Z\"\n        }\n    ],\n    \"meta\": {\n        \"total\": 6,\n        \"page\": 1,\n        \"limit\": 20,\n        \"totalPages\": 1,\n        \"hasNextPage\": false,\n        \"hasPreviousPage\": false\n    }\n}"
+                      "body": "{\n    \"data\": [\n        {\n            \"id\": \"8141e95f-7d47-44d4-bcef-9fe76fc64c46\",\n            \"type\": \"TRADE\",\n            \"fromCurrency\": \"EUR\",\n            \"toCurrency\": \"GBP\",\n            \"fromAmount\": \"150.00\",\n            \"toAmount\": \"129.60\",\n            \"rate\": \"0.86400000\",\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"trade-20240115-001\",\n            \"metadata\": {\n                \"sourceBalance\": \"850\",\n                \"targetBalance\": \"129.60\"\n            },\n            \"createdAt\": \"2026-03-18T06:58:13.608Z\"\n        },\n        {\n            \"id\": \"3d00789a-9627-45d8-ac63-b52cff3d25e5\",\n            \"type\": \"CONVERT\",\n            \"fromCurrency\": \"USD\",\n            \"toCurrency\": \"NGN\",\n            \"fromAmount\": \"150.00\",\n            \"toAmount\": \"203853.89\",\n            \"rate\": \"1359.02590000\",\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"convert-2024-01-15-001\",\n            \"metadata\": {\n                \"sourceBalance\": \"850\",\n                \"targetBalance\": \"203853.89\"\n            },\n            \"createdAt\": \"2026-03-18T06:57:06.874Z\"\n        },\n        {\n            \"id\": \"a0c8b3d4-2892-4bd8-bd4e-ba8aa904eea9\",\n            \"type\": \"FUND\",\n            \"fromCurrency\": null,\n            \"toCurrency\": \"EUR\",\n            \"fromAmount\": null,\n            \"toAmount\": \"1000.00\",\n            \"rate\": null,\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"fund-2024-01-15-002\",\n            \"metadata\": {\n                \"balance\": \"1000.00\"\n            },\n            \"createdAt\": \"2026-03-18T06:56:06.559Z\"\n        },\n        {\n            \"id\": \"5c6b09c6-0694-40ee-8e84-0afede05c59c\",\n            \"type\": \"FUND\",\n            \"fromCurrency\": null,\n            \"toCurrency\": \"USD\",\n            \"fromAmount\": null,\n            \"toAmount\": \"1000.00\",\n            \"rate\": null,\n            \"status\": \"COMPLETED\",\n            \"idempotencyKey\": \"fund-2024-01-15-001\",\n            \"metadata\": {\n                \"balance\": \"1000.00\"\n            },\n            \"createdAt\": \"2026-03-18T06:55:52.499Z\"\n        }\n    ],\n    \"meta\": {\n        \"total\": 4,\n        \"page\": 1,\n        \"limit\": 20,\n        \"totalPages\": 1,\n        \"hasNextPage\": false,\n        \"hasPreviousPage\": false\n    }\n}"
                     }
                   ]
                 },
@@ -3792,15 +4565,8 @@
                     ],
                     "url": {
                       "raw": "{{baseUrl}}/api/v1/transactions/:id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "transactions",
-                        ":id"
-                      ],
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "transactions", ":id"],
                       "variable": [
                         {
                           "key": "id",
@@ -3824,15 +4590,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions/:id",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions",
-                            ":id"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions", ":id"],
                           "variable": [
                             {
                               "key": "id",
@@ -3938,15 +4697,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions/:id",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions",
-                            ":id"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions", ":id"],
                           "variable": [
                             {
                               "key": "id",
@@ -4052,19 +4804,12 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions/:id",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions",
-                            ":id"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions", ":id"],
                           "variable": [
                             {
                               "key": "id",
-                              "value": "2e3ba565-0c8a-447f-b735-8b473853e31d",
+                              "value": "8141e95f-7d47-44d4-bcef-9fe76fc64c46",
                               "description": "Transaction ID"
                             }
                           ]
@@ -4136,11 +4881,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "384"
+                          "value": "320"
                         },
                         {
                           "key": "Date",
-                          "value": "Wed, 18 Mar 2026 06:10:25 GMT"
+                          "value": "Wed, 18 Mar 2026 08:00:16 GMT"
                         },
                         {
                           "key": "Connection",
@@ -4152,7 +4897,7 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"id\": \"2e3ba565-0c8a-447f-b735-8b473853e31d\",\n    \"userId\": \"50c707ea-7420-4f97-a877-72ca1eab6240\",\n    \"type\": \"CONVERT\",\n    \"fromCurrency\": \"USD\",\n    \"toCurrency\": \"NGN\",\n    \"fromAmount\": \"100.00\",\n    \"toAmount\": \"136424.14\",\n    \"rate\": \"1364.24140000\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"convert-2024-01-15-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"1000\",\n        \"targetBalance\": \"136424.14\"\n    },\n    \"createdAt\": \"2026-03-17T21:33:58.180Z\"\n}"
+                      "body": "{\n    \"id\": \"8141e95f-7d47-44d4-bcef-9fe76fc64c46\",\n    \"type\": \"TRADE\",\n    \"fromCurrency\": \"EUR\",\n    \"toCurrency\": \"GBP\",\n    \"fromAmount\": \"150.00\",\n    \"toAmount\": \"129.60\",\n    \"rate\": \"0.86400000\",\n    \"status\": \"COMPLETED\",\n    \"idempotencyKey\": \"trade-20240115-001\",\n    \"metadata\": {\n        \"sourceBalance\": \"850\",\n        \"targetBalance\": \"129.60\"\n    },\n    \"createdAt\": \"2026-03-18T06:58:13.608Z\"\n}"
                     }
                   ]
                 },
@@ -4177,21 +4922,15 @@
                       }
                     ],
                     "url": {
-                      "raw": "{{baseUrl}}/api/v1/transactions/stats?currency=USD",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "api",
-                        "v1",
-                        "transactions",
-                        "stats"
-                      ],
+                      "raw": "{{baseUrl}}/api/v1/transactions/stats",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "v1", "transactions", "stats"],
                       "query": [
                         {
                           "key": "currency",
                           "value": "USD",
-                          "description": "Filter statistics by currency"
+                          "description": "Filter statistics by currency",
+                          "disabled": true
                         }
                       ]
                     },
@@ -4210,15 +4949,8 @@
                         ],
                         "url": {
                           "raw": "{{baseUrl}}/api/v1/transactions/stats",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "api",
-                            "v1",
-                            "transactions",
-                            "stats"
-                          ],
+                          "host": ["{{baseUrl}}"],
+                          "path": ["api", "v1", "transactions", "stats"],
                           "query": [
                             {
                               "key": "currency",
@@ -4295,11 +5027,11 @@
                         },
                         {
                           "key": "content-length",
-                          "value": "199"
+                          "value": "168"
                         },
                         {
                           "key": "Date",
-                          "value": "Wed, 18 Mar 2026 06:11:42 GMT"
+                          "value": "Wed, 18 Mar 2026 08:00:42 GMT"
                         },
                         {
                           "key": "Connection",
@@ -4311,7 +5043,7 @@
                         }
                       ],
                       "cookie": [],
-                      "body": "{\n    \"totalTransactions\": 6,\n    \"byType\": {\n        \"FUND\": 3,\n        \"CONVERT\": 2,\n        \"TRADE\": 1\n    },\n    \"byCurrency\": {\n        \"USD\": {\n            \"funded\": \"1200.00\",\n            \"spent\": \"200.00\"\n        },\n        \"EUR\": {\n            \"funded\": \"250.00\",\n            \"spent\": \"0\"\n        },\n        \"NGN\": {\n            \"funded\": \"0\",\n            \"spent\": \"50.00\"\n        }\n    }\n}"
+                      "body": "{\n    \"totalTransactions\": 4,\n    \"byType\": {\n        \"FUND\": 2,\n        \"CONVERT\": 1,\n        \"TRADE\": 1\n    },\n    \"byCurrency\": {\n        \"USD\": {\n            \"funded\": \"1000.00\",\n            \"spent\": \"150.00\"\n        },\n        \"EUR\": {\n            \"funded\": \"1000.00\",\n            \"spent\": \"150.00\"\n        }\n    }\n}"
                     }
                   ]
                 }
@@ -4339,9 +5071,7 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
@@ -4350,9 +5080,7 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],
